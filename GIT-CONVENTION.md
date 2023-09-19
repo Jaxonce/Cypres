@@ -18,11 +18,12 @@ For example:
 
 - **Reference Issue Numbers**: If your commit relates to a specific issue or task, reference it in the commit message using the `#<issue_number>` format. For example: `Fix: Resolve issue #123`.
 
-### 2. Gitmoji (Optional)
+### 2. ![Gitmoji](https://gitmoji.dev/) (Optional)
 
 - **Include a gitmoji (if relevant)**: Optionally, you can include a gitmoji at the begining of the message to indicate the module or component affected by the commit.
 
-![Gitmoji](https://gitmoji.dev/)
+For example:
+- `🐛 Fix: Resolve issue with user authentication`
 
 ## Branches
 
