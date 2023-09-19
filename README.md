@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="Documentation/Images/logo.png" alt="Logo" width="80" height="80">
+    <img src="Documentation/Images/logo.svg" alt="Logo" width="80" height="80">
 
   <h1 align="center">Cyprès</h1>
 
