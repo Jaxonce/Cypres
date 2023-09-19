@@ -16,7 +16,10 @@ For example:
 
 - **Use Imperative Verbs**: Start the subject line with an imperative verb (e.g., Fix, Add, Update, Refactor) that conveys what the commit does.
 
-- **Reference Issue Numbers**: If your commit relates to a specific issue or task, reference it in the commit message using the `#<issue_number>` format. For example: `Fix: Resolve issue #123`.
+- **Reference Issue Numbers**: If your commit relates to a specific issue or task, reference it in the commit message using the `#<issue_number>` format. 
+
+For example: 
+- `Fix: Resolve issue #123`.
 
 ### 2. ![Gitmoji](https://gitmoji.dev/) (Optional)
 
@@ -30,11 +33,17 @@ For example:
 
 ### 1. Branch Names
 
-- **Use Hyphen Separators**: Branch names should be in lowercase and use hyphens to separate words. For example: `feature-login-page`, `bugfix-user-profile`.
+- **Use Hyphen Separators**: Branch names should be in lowercase and use hyphens to separate words. 
+
+For example: 
+- `feature-login-page`, `bugfix-user-profile`.
 
 - **Be Descriptive**: Branch names should be descriptive of the work being done in the branch. Avoid generic names like `fix` or `update`.
 
-- **Include Issue or Task Number**: Include the related issue or task number in the branch name, if applicable, to link it to a specific piece of work. For example: `issue-123-feature`.
+- **Include Issue or Task Number**: Include the related issue or task number in the branch name, if applicable, to link it to a specific piece of work. 
+
+For example: 
+- `issue-123-feature`.
 
 ## Pull Requests (PRs)
 
@@ -42,7 +51,10 @@ For example:
 
 - **Use Descriptive Titles**: PR titles should provide a concise and clear summary of the changes in the PR. Follow a similar format to commit messages, starting with an imperative verb.
 
-- **Reference Related Issue**: If the PR is related to a specific issue or task, reference it in the PR title using the `#<issue_number>` format. For example: `Fix: Resolve issue #123`.
+- **Reference Related Issue**: If the PR is related to a specific issue or task, reference it in the PR title using the `#<issue_number>` format. 
+
+For example: 
+- `Fix: Resolve issue #123`.
 
 ### 2. PR Descriptions
 
