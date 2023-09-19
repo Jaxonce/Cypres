@@ -19,7 +19,7 @@ For example:
 - **Reference Issue Numbers**: If your commit relates to a specific issue or task, reference it in the commit message using the `#<issue_number>` format. 
 
 For example: 
-- `Fix: Resolve issue #123`.
+- `Fix: Resolve issue #123`
 
 ### 2. ![Gitmoji](https://gitmoji.dev/) (Optional)
 
@@ -36,14 +36,15 @@ For example:
 - **Use Hyphen Separators**: Branch names should be in lowercase and use hyphens to separate words. 
 
 For example: 
-- `feature-login-page`, `bugfix-user-profile`.
+- `feature-login-page`
+- `bugfix-user-profile`
 
 - **Be Descriptive**: Branch names should be descriptive of the work being done in the branch. Avoid generic names like `fix` or `update`.
 
 - **Include Issue or Task Number**: Include the related issue or task number in the branch name, if applicable, to link it to a specific piece of work. 
 
 For example: 
-- `issue-123-feature`.
+- `bugfix-user-profile-123`
 
 ## Pull Requests (PRs)
 
@@ -54,7 +55,7 @@ For example:
 - **Reference Related Issue**: If the PR is related to a specific issue or task, reference it in the PR title using the `#<issue_number>` format. 
 
 For example: 
-- `Fix: Resolve issue #123`.
+- `Fix: Resolve issue #123`
 
 ### 2. PR Descriptions
 
