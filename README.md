@@ -13,7 +13,7 @@
 
 # About the project
 
-The genesis of the idea of ​​Cyprès started from two observations, the first is social: today the
+The genesis of the idea of Cyprès started from two observations, the first is social: today the
 Travel and opportunities to live abroad are made more and more possible and easier.
 The second observation concerns the functioning of other social networks, in fact all these
 Applications always offer a single space for a single functionality. For example, we
@@ -26,7 +26,7 @@ This common space is made up of several sections, each of which has the role of 
 digital content connecting the 2 people. This operation aims to really highlight the
 complicity and intimacy, the different types of relationships being well separated.
 
-## Built with 
+### Built with 
 
 ![Swift](https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white)
 
@@ -34,7 +34,7 @@ complicity and intimacy, the different types of relationships being well separat
 
 //TODO
 
-## Instalation
+### Instalation
 
 //TODO
 
