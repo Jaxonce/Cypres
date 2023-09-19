@@ -24,6 +24,7 @@ For example:
 
 For example:
 - `🐛 Fix: Resolve issue with user authentication`
+- `✨ Feature: Implement user profile settings`
 
 ## Branches
 
