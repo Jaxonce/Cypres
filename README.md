@@ -1,7 +1,7 @@
 <div align="center">
-    <img src="Documentation/Images/logo.svg" alt="Logo" width="150" height="150">
+    <img src="Documentation/Images/banner.svg" alt="Banner">
 
-  <h1 align="center">Cyprès</h1>
+  
 
   <p align="center">
     <h3>Centralisez tous vos contenus multimédias en une seule application !</h3>
