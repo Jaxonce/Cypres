@@ -6,7 +6,7 @@
   <p align="center">
     <h3>Centralisez tous vos contenus multimédias en une seule application !</h3>
     <br />
-    <a href="https://codefirst.iut.uca.fr/git/CyDevs/cypres/wiki/Home"><strong>Explore the docs »</strong></a>
+    <a href="https://codefirst.iut.uca.fr/git/CyDevs/cypres/wiki/Home"><strong>Explorer la documentation »</strong></a>
     <br />
   </p>
 </div>
