@@ -39,3 +39,11 @@ complicity and intimacy, the different types of relationships being well separat
 //TODO
 
 # Contact
+
+Equipe de projet :
+* [Vincent Astolfi](https://codefirst.iut.uca.fr/git/vincent.astolfi)
+* [Axel De La Fuente](https://codefirst.iut.uca.fr/git/axel.de_la_fuente) 
+* [Maxence Lanone](https://codefirst.iut.uca.fr/git/maxence.lanone)
+* [Félix Mielcarek](https://codefirst.iut.uca.fr/git/felix.mielcarek)
+
+Professeur référent : [Cédric Bouhours](https://codefirst.iut.uca.fr/git/cedric.bouhours)
