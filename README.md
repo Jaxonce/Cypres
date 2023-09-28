@@ -11,7 +11,7 @@
   </p>
 </div>
 
-# About the project
+# A propos
 
 The genesis of the idea of Cyprès started from two observations, the first is social: today the
 Travel and opportunities to live abroad are made more and more possible and easier.
@@ -26,7 +26,7 @@ This common space is made up of several sections, each of which has the role of 
 digital content connecting the 2 people. This operation aims to really highlight the
 complicity and intimacy, the different types of relationships being well separated.
 
-### Built with 
+### Technologies
 
 ![Swift](https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white)
 
@@ -34,19 +34,8 @@ complicity and intimacy, the different types of relationships being well separat
 
 //TODO
 
-### Instalation
+### Installation
 
 //TODO
-
-# Usage
-
-//TODO
-
-# Roadmap
-
-# License
 
 # Contact
-
-# Acknowledgments
-
