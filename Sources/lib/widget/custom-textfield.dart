@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -15,31 +16,24 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
         width: screenWidth,
         height: screenWidth/6.2,
-        child:TextField(
+        child:CupertinoTextField(
+          placeholder: text,
+          placeholderStyle: const TextStyle(
+            color: Color.fromRGBO(255, 255, 255, 0.45),
+            fontSize: 16,
+            fontFamily: 'SFProDisplay',
+            fontWeight: FontWeight.bold,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+
           obscureText: obscureText,
           keyboardType: keyboardType,
-          decoration: InputDecoration(
-            hintText: text,
-            hintStyle: const TextStyle(
-              color: Color.fromRGBO(255, 255, 255, 0.45),
-              fontSize: 16,
-              fontFamily: 'SFProDisplay',
-              fontWeight: FontWeight.bold,
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: const Color(0xffD7E2D6),
+              width: 2,
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
-            enabledBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Color(0xffD7E2D6),
-                width: 2.0,
-              ),
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Color(0xffD7E2D6),
-              ),
-              borderRadius: BorderRadius.circular(30.0),
-            ),
+            borderRadius: BorderRadius.circular(30.0),
           ),
           style: const TextStyle(
             color: Color(0xffD7E2D6),

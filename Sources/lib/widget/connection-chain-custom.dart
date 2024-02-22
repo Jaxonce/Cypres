@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:test_flutter_vue/widget/custom-textfield.dart';
@@ -26,8 +27,8 @@ class ConnectionChainCustom extends StatelessWidget {
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
 
-    return Scaffold(
-      body: Container(
+    return CupertinoPageScaffold(
+      child: Container(
         padding: EdgeInsets.only(top: paddingValue, left: 35, right:35),
         decoration: const BoxDecoration(
           gradient: LinearGradient(

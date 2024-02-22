@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_flutter_vue/widget/big-button.dart';
@@ -20,8 +21,8 @@ class _HomePageState extends State<HomePage> {
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
 
-    return Scaffold(
-      body: Container(
+    return CupertinoPageScaffold(
+      child: Container(
         padding: EdgeInsets.only(top: paddingValue, left: 35, right:35),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
