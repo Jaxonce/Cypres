@@ -8,19 +8,19 @@ trigger:
 
 steps:
   - name: app-build
-    image: ghcr.io/cirruslabs/flutter:3.13.9
+    image: ghcr.io/cirruslabs/flutter:3.19.2
     commands:
       - cd ./Sources/
       - flutter build apk
 
   - name: build-web
-    image: ghcr.io/cirruslabs/flutter:3.13.9
+    image: ghcr.io/cirruslabs/flutter:3.19.2
     commands:
       - cd ./Sources/
       - flutter build web --web-renderer canvaskit
 
   - name: code-analysis
-    image: ghcr.io/cirruslabs/flutter:3.13.9
+    image: ghcr.io/cirruslabs/flutter:3.19.2
     environment:
       SONAR_TOKEN:
         from_secret: SONAR_TOKEN
