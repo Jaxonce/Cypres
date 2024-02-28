@@ -3,7 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_flutter_vue/widget/custom-textfield.dart';
+import 'package:test_flutter_vue/widget/connection/custom-textfield.dart';
 
 import 'big-button.dart';
 
