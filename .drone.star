@@ -43,7 +43,8 @@ def Code_Analysis():
             "export PATH=$SONAR_SCANNER_HOME/bin:$PATH",
             "export SONAR_SCANNER_OPTS="-server"",
             "sonar-scanner -D sonar.projectKey=Cypres -D sonar.sources=./Sources/ -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.login=$${PLUGIN_SONAR_TOKEN}"
-        ]
+        ],
+        "depends_on": [ "app-build" ]
     }
 
 def CI_Empty():
