@@ -41,10 +41,10 @@ def Code_Analysis():
             "curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip",
             "unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/",
             "export PATH=$SONAR_SCANNER_HOME/bin:$PATH",
-            "export SONAR_SCANNER_OPTS="-server"",
+            "export SONAR_SCANNER_OPTS='-server'",
             "sonar-scanner -D sonar.projectKey=Cypres -D sonar.sources=./Sources/ -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.login=$${PLUGIN_SONAR_TOKEN}"
         ],
-        "depends_on": [ "app-build" ]
+        "depends_on": [ "app-build" ],
     }
 
 def CI_Empty():
