@@ -21,9 +21,6 @@ steps:
 
   - name: code-analysis
     image: ghcr.io/cirruslabs/flutter:3.19.2
-    environment:
-      SONAR_TOKEN:
-        from_secret: SONAR_TOKEN
     commands:
       - export SONAR_SCANNER_VERSION=4.7.0.2747
       - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
@@ -31,5 +28,8 @@ steps:
       - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
       - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
       - export SONAR_SCANNER_OPTS="-server"
-      - sonar-scanner -D sonar.projectKey=Cypres -D sonar.sources=./Sources/ -D sonar.host.url=https://codefirst.iut.uca.fr/sonar
+      - sonar-scanner -D sonar.projectKey=Cypres -D sonar.sources=./Sources/ -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.login=$${PLUGIN_SONAR_TOKEN}
+    settings:
+      sonar_token:
+        from_secret: SECRET_SONAR_LOGIN
     depends_on: [app-build] 
