@@ -1,21 +1,17 @@
-import 'package:test_flutter_vue/model/contact_model.dart';
-import 'package:test_flutter_vue/model/message_model.dart';
 import 'package:test_flutter_vue/services/interfaces/message_service.dart';
 
-import 'data_stub.dart';
+import '../../data/DTOs/contact_dto.dart';
+import '../../data/DTOs/message_dto.dart';
+import 'base_stub.dart';
 
-class MessageServiceStub implements MessageService {
-  final DataStub dataStub;
-
-  MessageServiceStub(this.dataStub);
-
+class MessageServiceStub extends BaseStub implements MessageService {
   @override
-  void sendMessage(MessageModel m) {
+  void sendMessage(MessageDTO m) {
     // TODO: implement sendMessage
   }
 
   @override
-  List<MessageModel> getMessages(ContactModel c) {
+  List<MessageDTO> getMessages(ContactDTO c) {
     // TODO: implement getMessages
     throw UnimplementedError();
   }

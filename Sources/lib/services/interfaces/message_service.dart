@@ -1,8 +1,8 @@
-import 'package:test_flutter_vue/model/contact_model.dart';
-import 'package:test_flutter_vue/model/message_model.dart';
+import '../../data/DTOs/contact_dto.dart';
+import '../../data/DTOs/message_dto.dart';
 
 abstract class MessageService {
-  void sendMessage(MessageModel m);
+  void sendMessage(MessageDTO m);
 
-  List<MessageModel> getMessages(ContactModel c);
+  List<MessageDTO> getMessages(ContactDTO c);
 }

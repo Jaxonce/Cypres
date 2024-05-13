@@ -1,5 +1,5 @@
-import '../../model/conversation_model.dart';
+import '../../data/DTOs/conversation_dto.dart';
 
 abstract class ConversationService {
-  List<ConversationModel> getConversation();
+  List<ConversationDTO> getConversations();
 }

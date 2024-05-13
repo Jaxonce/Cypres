@@ -1,5 +1,6 @@
-class ContactModel {
-  final String name;
+import 'package:test_flutter_vue/model/member_model.dart';
 
-  ContactModel(this.name);
+class ContactModel extends MemberModel {
+  ContactModel(id, name, profilePictureBase64)
+      : super(id, name, profilePictureBase64);
 }

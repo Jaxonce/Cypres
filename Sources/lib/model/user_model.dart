@@ -1,5 +1,8 @@
-class UserModel {
-  final String name;
+import 'package:test_flutter_vue/model/member_model.dart';
 
-  UserModel(this.name);
+class UserModel extends MemberModel {
+  String mailAddress;
+
+  UserModel(this.mailAddress, id, name, profilePictureBase64)
+      : super(id, name, profilePictureBase64);
 }
