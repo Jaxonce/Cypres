@@ -40,6 +40,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   colorful_safe_area: ^1.0.0
   image_picker: ^1.0.7
+  pull_down_button: ^0.9.4
 
 dev_dependencies:
   flutter_test:

@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:pull_down_button/pull_down_button.dart';
 import 'package:test_flutter_vue/json/chat-json.dart';
 import 'package:test_flutter_vue/widget/message/bubble-chat.dart';
 
@@ -90,7 +91,12 @@ class _MessagePageState extends State<MessagePage> {
         ],
       ),
       previousPageTitle: 'Retour',
-      trailing: const Icon(CupertinoIcons.ellipsis_circle, size: 30),
+      trailing: PullDownButton(
+        itemBuilder: (context) => [
+          PullDownMenuItem(onTap: getInformation(), title: "Information",  icon: CupertinoIcons.info_circle),
+          PullDownMenuItem(onTap: deleteConversation(), title: "Delete", subtitle: "Erase the conversation", icon: CupertinoIcons.delete, isDestructive: true)
+        ], buttonBuilder: (context, showMenu) => CupertinoButton(onPressed: showMenu, padding: EdgeInsets.zero, child: const Icon(CupertinoIcons.ellipsis_circle)),
+      ),
       backgroundColor: const Color.fromRGBO(5, 31, 19, 0.37),
     );
   }
@@ -108,4 +114,8 @@ class _MessagePageState extends State<MessagePage> {
       }),
     );
   }
+
+  deleteConversation() {}
+
+  getInformation() {}
 }
