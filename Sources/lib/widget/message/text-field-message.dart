@@ -12,13 +12,27 @@ class MessageTextField extends StatefulWidget {
 
 class _MessageTextFieldState extends State<MessageTextField> {
   final TextEditingController _controller = TextEditingController();
+  bool _hasText = false;
   Uint8List? bytes;
   File? file;
 
   @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_checkText);
+  }
+
+  @override
   void dispose() {
+    _controller.removeListener(_checkText);
     _controller.dispose();
     super.dispose();
+  }
+
+  void _checkText() {
+    setState(() {
+      _hasText = _controller.text.isNotEmpty;
+    });
   }
 
   @override
@@ -55,9 +69,10 @@ class _MessageTextFieldState extends State<MessageTextField> {
                   child: CupertinoButton(
                     onPressed: sendMessage(),
                     padding: EdgeInsets.zero,
-                    child: const Icon(CupertinoIcons.paperplane),
+                    child: Icon(_controller.text.isNotEmpty ? CupertinoIcons.paperplane_fill: CupertinoIcons.paperplane, color: _controller.text.isNotEmpty ? const Color(0xffD0FFE0) : CupertinoColors.systemGrey ),
                   ),
                 ),
+                controller: _controller,
                 suffixMode: OverlayVisibilityMode.always,
                 minLines: 1,
                 maxLines: 6,
