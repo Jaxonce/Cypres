@@ -1,10 +1,39 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MessageTextField extends StatelessWidget {
-  final String text;
 
-  const MessageTextField({Key? key, required this.text}) : super(key: key);
+class MessageTextField extends StatefulWidget {
+  @override
+  _MessageTextFieldState createState() => _MessageTextFieldState();
+}
+
+class _MessageTextFieldState extends State<MessageTextField> {
+  final TextEditingController _controller = TextEditingController();
+  bool _hasText = false;
+  Uint8List? bytes;
+  File? file;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_checkText);
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_checkText);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _checkText() {
+    setState(() {
+      _hasText = _controller.text.isNotEmpty;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +44,7 @@ class MessageTextField extends StatelessWidget {
       //Permet d'aligner les icons en bas quand le textfield s'agrandit
         child: IntrinsicHeight(
             child: CupertinoTextField(
-                placeholder: text,
+                placeholder: "Message",
                 placeholderStyle: const TextStyle(
                   color: Color.fromRGBO(255, 255, 255, 0.45),
                   fontSize: 16,
@@ -40,13 +69,24 @@ class MessageTextField extends StatelessWidget {
                   child: CupertinoButton(
                     onPressed: sendMessage(),
                     padding: EdgeInsets.zero,
-                    child: const Icon(CupertinoIcons.paperplane),
+                    child: Icon(_controller.text.isNotEmpty ? CupertinoIcons.paperplane_fill: CupertinoIcons.paperplane, color: _controller.text.isNotEmpty ? const Color(0xffD0FFE0) : CupertinoColors.systemGrey ),
                   ),
                 ),
+                controller: _controller,
                 suffixMode: OverlayVisibilityMode.always,
                 minLines: 1,
                 maxLines: 6,
-              )
+              contentInsertionConfiguration: ContentInsertionConfiguration(
+                  allowedMimeTypes: const <String>['image/png', 'image/gif', 'image/heic'],
+                  onContentInserted: (KeyboardInsertedContent data) async {
+                    if (data.data != null) {
+                      setState(() {
+                        bytes = data.data;
+                      });
+                    }
+                  }
+              ),
+              ),
         )
     );
   }

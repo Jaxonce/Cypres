@@ -1,11 +1,30 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:test_flutter_vue/widget/message/popup-surface.dart';
 import 'package:test_flutter_vue/widget/message/text-field-message.dart';
 
-class MessageBottomBar_save extends StatelessWidget {
+class MessageBottomBar extends StatefulWidget {
+  @override
+  _MessageBottomBarState createState() => _MessageBottomBarState();
+}
 
-  const MessageBottomBar_save({Key? key})
-      : super(key: key);
+class _MessageBottomBarState extends State<MessageBottomBar> {
+  File? _image;
+  final picker = ImagePicker();
+
+  Future getImage() async{
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if(pickedFile != null) {
+        _image = File(pickedFile.path);
+      } else {
+        print('Aucune image selectionné');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +42,22 @@ class MessageBottomBar_save extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CupertinoButton(
-                        onPressed: addFile(),
+                        onPressed: getImage,
                         child: const Icon(CupertinoIcons.paperclip, color: CupertinoColors.systemGrey,),
                       ),
                     ],
                   ),
-
+                  Expanded(
+                      child: MessageTextField()
+                  ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CupertinoButton(
                         onPressed: () {
                           showCupertinoModalPopup(context: context, builder: (BuildContext builder) {
-                              return const CustomPopUpSurface();
-                            },
+                            return const CustomPopUpSurface();
+                          },
                           );
                         },
                         child: const Icon(CupertinoIcons.square_grid_2x2, color: CupertinoColors.systemGrey),
@@ -52,4 +73,5 @@ class MessageBottomBar_save extends StatelessWidget {
   }
 
   addFile() {}
+
 }

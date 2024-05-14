@@ -12,26 +12,17 @@ class CustomChatBubble extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context){
-    if(isMe){
-      return BubbleSpecialThree(
-        text: message,
-        tail: isLast,
-        isSender: isMe,
-        color: CupertinoColors.activeBlue,
-        textStyle: const TextStyle(
-            color: CupertinoColors.white,
-            fontSize: 16
-        ),
-      );
-    } else {
-      return BubbleSpecialThree(
-        text: message,
-        tail: isLast,
-        isSender: isMe,
-        color: CupertinoColors.systemGrey5,
-      );
-    }
+  Widget build(BuildContext context) {
+    return BubbleSpecialThree(
+      text: message,
+      tail: isLast,
+      isSender: isMe,
+      color: const Color(0xff26252A),
+      textStyle: const TextStyle(
+          color: CupertinoColors.white,
+          fontSize: 16
+      ),
 
+    );
   }
 }

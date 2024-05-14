@@ -185,7 +185,8 @@ const List messages = [
   },
   {
     "isMe": true,
-    "message": "talk to you soon.",
+    "message": "talk to you soon."
+        "test avec un message plus long",
     "time": "1:41 PM",
     "isLast": true,
   },
