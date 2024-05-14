@@ -1,12 +1,13 @@
-import 'dart:ffi';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:test_flutter_vue/json/chat-json.dart';
 import 'package:test_flutter_vue/widget/message/bubble-chat.dart';
-import 'package:test_flutter_vue/widget/message/message-bottom-bar.dart';
+
+import '../widget/message/message-bottom-bar-stateful.dart';
 
 class MessagePage extends StatefulWidget {
   final String name;
@@ -41,7 +42,6 @@ class _MessagePageState extends State<MessagePage> {
               behavior: HitTestBehavior
                   .opaque, // Détecte les gestes même lorsque l'utilisateur clique en dehors du champ de texte ou du clavier,
               child: Stack(children: [
-                getBody(),
                 Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
@@ -58,7 +58,10 @@ class _MessagePageState extends State<MessagePage> {
                           ),
                           fit: BoxFit.cover),
                     ),
-                    child: const MessageBottomBar()),
+                    child: Stack(children: [
+                      CupertinoPageScaffold(backgroundColor: Colors.transparent, resizeToAvoidBottomInset: true,child: getBody(),),
+                      MessageBottomBar()
+                    ],)),
               ]),
             )));
   }
@@ -78,7 +81,7 @@ class _MessagePageState extends State<MessagePage> {
           Padding(
             padding: EdgeInsets.only(right: paddingValue / 2.5),
             child: Text(widget.name,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 17,
                     fontStyle: FontStyle.normal)),
@@ -94,7 +97,8 @@ class _MessagePageState extends State<MessagePage> {
 
   Widget getBody() {
     return ListView(
-      padding: EdgeInsets.only(top: 20, bottom: 80),
+      dragStartBehavior: DragStartBehavior.down,
+      padding: const EdgeInsets.only(top: 20, bottom: 80),
       children: List.generate(messages.length, (index) {
         return CustomChatBubble(
             isMe: messages[index]['isMe'],

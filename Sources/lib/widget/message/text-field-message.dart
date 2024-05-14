@@ -1,10 +1,25 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MessageTextField extends StatelessWidget {
-  final String text;
 
-  const MessageTextField({Key? key, required this.text}) : super(key: key);
+class MessageTextField extends StatefulWidget {
+  @override
+  _MessageTextFieldState createState() => _MessageTextFieldState();
+}
+
+class _MessageTextFieldState extends State<MessageTextField> {
+  final TextEditingController _controller = TextEditingController();
+  Uint8List? bytes;
+  File? file;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +30,7 @@ class MessageTextField extends StatelessWidget {
       //Permet d'aligner les icons en bas quand le textfield s'agrandit
         child: IntrinsicHeight(
             child: CupertinoTextField(
-                placeholder: text,
+                placeholder: "Message",
                 placeholderStyle: const TextStyle(
                   color: Color.fromRGBO(255, 255, 255, 0.45),
                   fontSize: 16,
@@ -46,7 +61,17 @@ class MessageTextField extends StatelessWidget {
                 suffixMode: OverlayVisibilityMode.always,
                 minLines: 1,
                 maxLines: 6,
-              )
+              contentInsertionConfiguration: ContentInsertionConfiguration(
+                  allowedMimeTypes: const <String>['image/png', 'image/gif', 'image/heic'],
+                  onContentInserted: (KeyboardInsertedContent data) async {
+                    if (data.data != null) {
+                      setState(() {
+                        bytes = data.data;
+                      });
+                    }
+                  }
+              ),
+              ),
         )
     );
   }
