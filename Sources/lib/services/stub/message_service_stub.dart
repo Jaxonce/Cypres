@@ -11,8 +11,8 @@ class MessageServiceStub extends BaseStub implements MessageService {
   }
 
   @override
-  List<MessageDTO> getMessages(ContactDTO c) {
-    // TODO: implement getMessages
-    throw UnimplementedError();
-  }
+  List<MessageDTO> getMessages(ContactDTO c) => stub()
+      .messages
+      .where((m) => m.senderId == c.id || m.receiverId == c.id)
+      .toList();
 }
