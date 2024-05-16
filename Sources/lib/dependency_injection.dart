@@ -8,11 +8,11 @@ import 'services/stub/conversation_service_stub.dart';
 import 'services/stub/data_stub.dart';
 import 'services/stub/message_service_stub.dart';
 
-final GetIt getIt = GetIt.instance;
+final GetIt _getIt = GetIt.instance;
 
-Future<void> init() async {
-  getIt.registerSingleton<DataStub>(DataStub());
-  getIt.registerSingleton<ConversationService>(ConversationServiceStub());
-  getIt.registerSingleton<MessageService>(MessageServiceStub());
-  getIt.registerSingleton<ContactService>(ContactServiceStub());
+void init() {
+  _getIt.registerSingleton<DataStub>(DataStub());
+  _getIt.registerSingleton<ConversationService>(ConversationServiceStub());
+  _getIt.registerSingleton<MessageService>(MessageServiceStub());
+  _getIt.registerSingleton<ContactService>(ContactServiceStub());
 }

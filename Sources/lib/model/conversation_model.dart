@@ -1,4 +1,4 @@
-import 'package:test_flutter_vue/model/contact_model.dart';
+import 'package:cypres/model/contact_model.dart';
 
 import 'message_model.dart';
 

@@ -1,11 +1,8 @@
+import 'package:cypres/widget/message/popup-surface.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:test_flutter_vue/widget/message/popup-surface.dart';
-import 'package:test_flutter_vue/widget/message/text-field-message.dart';
 
 class MessageBottomBar_save extends StatelessWidget {
-
-  const MessageBottomBar_save({Key? key})
-      : super(key: key);
+  const MessageBottomBar_save({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,29 +21,33 @@ class MessageBottomBar_save extends StatelessWidget {
                     children: [
                       CupertinoButton(
                         onPressed: addFile(),
-                        child: const Icon(CupertinoIcons.paperclip, color: CupertinoColors.systemGrey,),
+                        child: const Icon(
+                          CupertinoIcons.paperclip,
+                          color: CupertinoColors.systemGrey,
+                        ),
                       ),
                     ],
                   ),
-
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       CupertinoButton(
                         onPressed: () {
-                          showCupertinoModalPopup(context: context, builder: (BuildContext builder) {
+                          showCupertinoModalPopup(
+                            context: context,
+                            builder: (BuildContext builder) {
                               return const CustomPopUpSurface();
                             },
                           );
                         },
-                        child: const Icon(CupertinoIcons.square_grid_2x2, color: CupertinoColors.systemGrey),
+                        child: const Icon(CupertinoIcons.square_grid_2x2,
+                            color: CupertinoColors.systemGrey),
                       ),
                     ],
                   )
                 ],
               ),
-            )
-        )
+            ))
       ],
     );
   }

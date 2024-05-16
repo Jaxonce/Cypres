@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:cypres/data/factories/conversations_factory.dart';
+import 'package:cypres/model/conversation_model.dart';
+import 'package:cypres/services/interfaces/conversation_service.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:test_flutter_vue/data/factories/conversations_factory.dart';
-import 'package:test_flutter_vue/model/conversation_model.dart';
-import 'package:test_flutter_vue/services/interfaces/conversation_service.dart';
+import 'package:get_it/get_it.dart';
+
+final GetIt _getIt = GetIt.instance;
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    conversation = ConversationsFactory.DTOToPOCO(getIt
+    conversation = ConversationsFactory.DTOToPOCO(_getIt
         .get<ConversationService>()
         .getConversations()
         .singleWhere((conv) => conv.contactId == '1001'));
@@ -36,7 +39,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Expanded(
                         child: conversation != null
-                            ? Text(conversation!.contact.name,
+                            ? Text(conversation!.contact.firstname,
                                 textAlign: TextAlign.center)
                             : const Text('undefined',
                                 textAlign: TextAlign.center))
