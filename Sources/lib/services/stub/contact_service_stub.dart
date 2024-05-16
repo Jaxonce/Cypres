@@ -1,4 +1,4 @@
-import 'package:test_flutter_vue/data/DTOs/contact_dto.dart';
+import 'package:cypres/data/DTOs/contact_dto.dart';
 
 import '../interfaces/contact_service.dart';
 import 'base_stub.dart';

@@ -1,15 +1,13 @@
-
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:cypres/model/contact_model.dart';
+import 'package:cypres/model/conversation_model.dart';
+import 'package:cypres/model/message_model.dart';
+import 'package:cypres/widget/message/bubble-chat.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:pull_down_button/pull_down_button.dart';
-import 'package:test_flutter_vue/json/chat-json.dart';
-import 'package:test_flutter_vue/model/contact_model.dart';
-import 'package:test_flutter_vue/model/conversation_model.dart';
-import 'package:test_flutter_vue/model/message_model.dart';
-import 'package:test_flutter_vue/widget/message/bubble-chat.dart';
 
 import '../utils/image_converter_utils.dart';
 import '../widget/message/message-bottom-bar-stateful.dart';
@@ -17,6 +15,7 @@ import '../widget/message/message-bottom-bar-stateful.dart';
 class MessagePage extends StatefulWidget {
   final String name;
   final String image;
+
   const MessagePage({Key? key, required this.name, required this.image})
       : super(key: key);
 
@@ -27,6 +26,7 @@ class MessagePage extends StatefulWidget {
 class _MessagePageState extends State<MessagePage> {
   late Image profileImage;
   late ConversationModel currentConversation;
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -36,7 +36,8 @@ class _MessagePageState extends State<MessagePage> {
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
 
-    currentConversation = ModalRoute.of(context)!.settings.arguments as ConversationModel;
+    currentConversation =
+        ModalRoute.of(context)!.settings.arguments as ConversationModel;
 
     return CupertinoPageScaffold(
         navigationBar: getTabBar(paddingValue, currentConversation.contact),
@@ -48,8 +49,8 @@ class _MessagePageState extends State<MessagePage> {
                 // Fermer le clavier lorsque l'utilisateur clique en dehors du champ de texte ou du clavier
                 FocusScope.of(context).unfocus();
               },
-              behavior: HitTestBehavior
-                  .opaque, // Détecte les gestes même lorsque l'utilisateur clique en dehors du champ de texte ou du clavier,
+              behavior: HitTestBehavior.opaque,
+              // Détecte les gestes même lorsque l'utilisateur clique en dehors du champ de texte ou du clavier,
               child: Stack(children: [
                 Container(
                     decoration: const BoxDecoration(
@@ -67,19 +68,27 @@ class _MessagePageState extends State<MessagePage> {
                           ),
                           fit: BoxFit.cover),
                     ),
-                    child: Stack(children: [
-                      CupertinoPageScaffold(backgroundColor: Colors.transparent, resizeToAvoidBottomInset: true,child: getBody(currentConversation.messages),),
-                      MessageBottomBar()
-                    ],)),
+                    child: Stack(
+                      children: [
+                        CupertinoPageScaffold(
+                          backgroundColor: Colors.transparent,
+                          resizeToAvoidBottomInset: true,
+                          child: getBody(currentConversation.messages),
+                        ),
+                        MessageBottomBar()
+                      ],
+                    )),
               ]),
             )));
   }
 
   addFile() {}
 
-  ObstructingPreferredSizeWidget? getTabBar(double paddingValue, ContactModel contact) {
+  ObstructingPreferredSizeWidget? getTabBar(
+      double paddingValue, ContactModel contact) {
     if (contact.profilePictureBase64 != null) {
-      profileImage = ImageConverterUtils.imageFromBase64String(contact.profilePictureBase64!);
+      profileImage = ImageConverterUtils.imageFromBase64String(
+          contact.profilePictureBase64!);
     }
     return CupertinoNavigationBar(
       middle: Row(
@@ -104,9 +113,21 @@ class _MessagePageState extends State<MessagePage> {
       previousPageTitle: 'Retour',
       trailing: PullDownButton(
         itemBuilder: (context) => [
-          PullDownMenuItem(onTap: getInformation(), title: "Information",  icon: CupertinoIcons.info_circle),
-          PullDownMenuItem(onTap: deleteConversation(), title: "Delete", subtitle: "Erase the conversation", icon: CupertinoIcons.delete, isDestructive: true)
-        ], buttonBuilder: (context, showMenu) => CupertinoButton(onPressed: showMenu, padding: EdgeInsets.zero, child: const Icon(CupertinoIcons.ellipsis_circle)),
+          PullDownMenuItem(
+              onTap: getInformation(),
+              title: "Information",
+              icon: CupertinoIcons.info_circle),
+          PullDownMenuItem(
+              onTap: deleteConversation(),
+              title: "Delete",
+              subtitle: "Erase the conversation",
+              icon: CupertinoIcons.delete,
+              isDestructive: true)
+        ],
+        buttonBuilder: (context, showMenu) => CupertinoButton(
+            onPressed: showMenu,
+            padding: EdgeInsets.zero,
+            child: const Icon(CupertinoIcons.ellipsis_circle)),
       ),
       backgroundColor: const Color.fromRGBO(5, 31, 19, 0.37),
     );
@@ -118,7 +139,8 @@ class _MessagePageState extends State<MessagePage> {
       padding: const EdgeInsets.only(top: 20, bottom: 80),
       children: List.generate(messagesList.length, (index) {
         return CustomChatBubble(
-            isMe: messagesList[index].receiverId == currentConversation.contact.id,
+            isMe: messagesList[index].receiverId ==
+                currentConversation.contact.id,
             message: messagesList[index].content,
             time: messagesList[index].date.hour.toString(),
             isLast: false);

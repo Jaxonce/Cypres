@@ -1,8 +1,8 @@
+import 'package:cypres/services/stub/data_stub.dart';
 import 'package:get_it/get_it.dart';
-import 'package:test_flutter_vue/services/stub/data_stub.dart';
+
+final GetIt _getIt = GetIt.instance;
 
 abstract class BaseStub {
-  final GetIt _getIt = GetIt.instance;
-
   DataStub stub() => _getIt.get<DataStub>();
 }

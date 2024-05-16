@@ -1,4 +1,4 @@
-import 'package:test_flutter_vue/services/interfaces/message_service.dart';
+import 'package:cypres/services/interfaces/message_service.dart';
 
 import '../../data/DTOs/contact_dto.dart';
 import '../../data/DTOs/message_dto.dart';
