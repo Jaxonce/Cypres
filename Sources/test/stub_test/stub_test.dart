@@ -25,7 +25,7 @@ void main() {
 
   print('Conversations:');
   conversations.forEach((conv) {
-    print('\t${conv.contact.name}:');
+    print('\t${conv.contact.firstname}:');
     conv.messages.forEach((mess) => print('\t\t${mess.content}'));
   });
 }

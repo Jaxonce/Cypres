@@ -1,7 +1,8 @@
 abstract class MemberModel {
   String id;
-  String name;
+  String firstname;
+  String lastname;
   String? profilePictureBase64;
 
-  MemberModel(this.id, this.name, this.profilePictureBase64);
+  MemberModel(this.id,this.firstname, this.lastname, this.profilePictureBase64);
 }

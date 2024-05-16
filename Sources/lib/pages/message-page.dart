@@ -6,8 +6,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 import 'package:test_flutter_vue/json/chat-json.dart';
+import 'package:test_flutter_vue/model/contact_model.dart';
+import 'package:test_flutter_vue/model/conversation_model.dart';
+import 'package:test_flutter_vue/model/message_model.dart';
 import 'package:test_flutter_vue/widget/message/bubble-chat.dart';
 
+import '../utils/image_converter_utils.dart';
 import '../widget/message/message-bottom-bar-stateful.dart';
 
 class MessagePage extends StatefulWidget {
@@ -21,6 +25,8 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
+  late Image profileImage;
+  late ConversationModel currentConversation;
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -30,8 +36,10 @@ class _MessagePageState extends State<MessagePage> {
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
 
+    currentConversation = ModalRoute.of(context)!.settings.arguments as ConversationModel;
+
     return CupertinoPageScaffold(
-        navigationBar: getTabBar(paddingValue),
+        navigationBar: getTabBar(paddingValue, currentConversation.contact),
         child: ColorfulSafeArea(
             color: const Color(0xff181818),
             top: false,
@@ -60,7 +68,7 @@ class _MessagePageState extends State<MessagePage> {
                           fit: BoxFit.cover),
                     ),
                     child: Stack(children: [
-                      CupertinoPageScaffold(backgroundColor: Colors.transparent, resizeToAvoidBottomInset: true,child: getBody(),),
+                      CupertinoPageScaffold(backgroundColor: Colors.transparent, resizeToAvoidBottomInset: true,child: getBody(currentConversation.messages),),
                       MessageBottomBar()
                     ],)),
               ]),
@@ -69,19 +77,22 @@ class _MessagePageState extends State<MessagePage> {
 
   addFile() {}
 
-  ObstructingPreferredSizeWidget? getTabBar(double paddingValue) {
+  ObstructingPreferredSizeWidget? getTabBar(double paddingValue, ContactModel contact) {
+    if (contact.profilePictureBase64 != null) {
+      profileImage = ImageConverterUtils.imageFromBase64String(contact.profilePictureBase64!);
+    }
     return CupertinoNavigationBar(
       middle: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: NetworkImage(widget.image),
+            backgroundImage: profileImage.image,
           ),
           const SizedBox(width: 8),
           Padding(
             padding: EdgeInsets.only(right: paddingValue / 2.5),
-            child: Text(widget.name,
+            child: Text(contact.firstname,
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 17,
@@ -101,16 +112,17 @@ class _MessagePageState extends State<MessagePage> {
     );
   }
 
-  Widget getBody() {
+  Widget getBody(List<MessageModel> messagesList) {
     return ListView(
       dragStartBehavior: DragStartBehavior.down,
       padding: const EdgeInsets.only(top: 20, bottom: 80),
-      children: List.generate(messages.length, (index) {
+      children: List.generate(messagesList.length, (index) {
         return CustomChatBubble(
-            isMe: messages[index]['isMe'],
-            message: messages[index]['message'],
-            time: messages[index]['time'],
-            isLast: messages[index]['isLast']);
+            isMe: messagesList[index].receiverId == currentConversation.contact.id,
+            message: messagesList[index].content,
+            time: messagesList[index].date.hour.toString(),
+            isLast: false);
+        //TODO Régler le probleme du isLast car je ne sais pas comment savoir que l'element est le dernier
       }),
     );
   }

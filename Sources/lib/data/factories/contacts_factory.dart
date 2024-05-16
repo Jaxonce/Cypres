@@ -3,7 +3,7 @@ import '../DTOs/contact_dto.dart';
 
 class ContactsFactory {
   static ContactModel DTOToPOCO(ContactDTO DTO) =>
-      ContactModel(DTO.id, DTO.name, DTO.profilePictureBase64);
+      ContactModel(DTO.id, DTO.firstname,DTO.lastname, DTO.profilePictureBase64);
 
   static List<ContactModel> DTOsToPOCOs(List<ContactDTO> DTOs) {
     List<ContactModel> pocos = [];
