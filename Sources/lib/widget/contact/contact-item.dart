@@ -1,24 +1,22 @@
 import 'dart:convert';
 
-import 'package:cypres/data/factories/conversations_factory.dart';
 import 'package:cypres/model/conversation_model.dart';
 import 'package:cypres/model/message_model.dart';
-import 'package:cypres/services/interfaces/conversation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 
-import '../../services/interfaces/contact_service.dart';
+import '../../controllers/contact-list-page-controller.dart';
+
+final GetIt _getIt = GetIt.instance;
 
 class ContactItem extends StatefulWidget {
   final String contactId;
-  final ContactService contactService;
-  final ConversationService conversationService;
 
-  const ContactItem(
-      {super.key,
-      required this.contactService,
-      required this.contactId,
-      required this.conversationService});
+  final ContactListPageController controller =
+      _getIt.get<ContactListPageController>();
+
+  ContactItem({super.key, required this.contactId});
 
   @override
   State<ContactItem> createState() => _ContactItemState();
@@ -34,8 +32,7 @@ class _ContactItemState extends State<ContactItem> {
   @override
   void initState() {
     super.initState();
-    conversationModel = ConversationsFactory.DTOsToPOCOs(
-        widget.conversationService.getConversations());
+    conversationModel = widget.controller.getConversations();
     for (var i = 0; i < conversationModel.length; i++) {
       if (widget.contactId == conversationModel[i].contact.id) {
         currentConversation = conversationModel[i];

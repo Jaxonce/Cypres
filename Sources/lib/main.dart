@@ -2,8 +2,6 @@ import 'package:cypres/json/chat-json.dart';
 import 'package:cypres/pages/contact-list-page.dart';
 import 'package:cypres/pages/home-page.dart';
 import 'package:cypres/pages/message-page.dart';
-import 'package:cypres/services/interfaces/contact_service.dart';
-import 'package:cypres/services/interfaces/conversation_service.dart';
 import 'package:cypres/widget/connection/connection-chain-custom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
@@ -67,9 +65,7 @@ class _MyAppState extends State<MyApp> {
               name: chatData[1]['name'],
               image: chatData[3]['img'],
             ),
-        '/contact': (context) => ContactPage(
-            contactService: _getIt.get<ContactService>(),
-            conversationService: _getIt.get<ConversationService>())
+        '/contact': (context) => ContactPage()
         //'/test':(context) => ChatScreen(username: "Maxence")
       },
     );
