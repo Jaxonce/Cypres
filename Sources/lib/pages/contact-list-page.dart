@@ -1,20 +1,20 @@
 import 'package:cypres/widget/contact/contact-item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:super_cupertino_navigation_bar/super_cupertino_navigation_bar.dart';
 
-import '../services/interfaces/contact_service.dart';
-import '../services/interfaces/conversation_service.dart';
+import '../controllers/contact-list-page-controller.dart';
+
+final GetIt _getIt = GetIt.instance;
 
 class ContactPage extends StatefulWidget {
-  final ContactService contactService;
-  final ConversationService conversationService;
+  final ContactListPageController controller =
+      _getIt.get<ContactListPageController>();
 
-  const ContactPage(
-      {Key? key,
-      required this.contactService,
-      required this.conversationService})
-      : super(key: key);
+  ContactPage({
+    super.key,
+  });
 
   @override
   State<ContactPage> createState() => _ContactPageState();
@@ -50,12 +50,9 @@ class _ContactPageState extends State<ContactPage> {
 
   Widget getBody() {
     return ListView.builder(
-      itemCount: widget.conversationService.getConversations().length,
+      itemCount: widget.controller.getConversationsNumber(),
       itemBuilder: (context, index) {
-        return ContactItem(
-            contactService: widget.contactService,
-            contactId: "${1001 + index}",
-            conversationService: widget.conversationService);
+        return ContactItem(contactId: "${1001 + index}");
       },
     );
   }
