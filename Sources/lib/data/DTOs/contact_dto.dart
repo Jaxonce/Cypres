@@ -4,5 +4,5 @@ class ContactDTO {
   String lastname;
   String? profilePictureBase64;
 
-  ContactDTO(this.id,this.firstname, this.lastname, this.profilePictureBase64);
+  ContactDTO(this.id, this.firstname, this.lastname, this.profilePictureBase64);
 }

@@ -5,4 +5,6 @@ abstract class MessageService {
   void sendMessage(MessageDTO m);
 
   List<MessageDTO> getMessages(ContactDTO c);
+
+  MessageDTO getLastMessage(ContactDTO c);
 }

@@ -7,7 +7,7 @@ import 'base_stub.dart';
 class MessageServiceStub extends BaseStub implements MessageService {
   @override
   void sendMessage(MessageDTO m) {
-    // TODO: implement sendMessage
+    stub().messages.add(m);
   }
 
   @override
@@ -15,4 +15,13 @@ class MessageServiceStub extends BaseStub implements MessageService {
       .messages
       .where((m) => m.senderId == c.id || m.receiverId == c.id)
       .toList();
+
+  @override
+  MessageDTO getLastMessage(ContactDTO c) => stub()
+      .messages
+      .where((m) => m.senderId == c.id || m.receiverId == c.id)
+      .reduce((a, b) => a.date.difference(DateTime.now()).abs() <
+              b.date.difference(DateTime.now()).abs()
+          ? a
+          : b);
 }

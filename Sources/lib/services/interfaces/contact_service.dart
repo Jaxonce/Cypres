@@ -1,5 +1,7 @@
 import '../../data/DTOs/contact_dto.dart';
 
 abstract class ContactService {
-  ContactDTO getContact(String id);
+  List<ContactDTO> getContacts(String sort);
+
+  ContactDTO getContact(String sort);
 }
