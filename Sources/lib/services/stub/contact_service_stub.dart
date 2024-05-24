@@ -5,6 +5,9 @@ import 'base_stub.dart';
 
 class ContactServiceStub extends BaseStub implements ContactService {
   @override
-  ContactDTO getContact(String id) =>
-      stub().contacts.singleWhere((c) => c.id == id);
+  List<ContactDTO> getContacts(String sort) => stub().contacts;
+
+  @override
+  ContactDTO getContact(String sort) =>
+      stub().contacts.firstWhere((element) => element.id == sort);
 }
