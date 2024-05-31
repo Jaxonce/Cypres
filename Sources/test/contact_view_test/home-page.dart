@@ -17,9 +17,9 @@ class _HomePageState extends State<HomePage> {
   ConversationModel? conversation;
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    conversation = ConversationsFactory.DTOToPOCO(_getIt
+    conversation = await ConversationsFactory.DTOToPOCO(_getIt
         .get<ConversationService>()
         .getConversations()
         .singleWhere((conv) => conv.contactId == '1001'));

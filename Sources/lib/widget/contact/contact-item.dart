@@ -30,9 +30,9 @@ class _ContactItemState extends State<ContactItem> {
   late Image profileImage;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-    conversationModel = widget.controller.getConversations();
+    conversationModel = await widget.controller.getConversations();
     for (var i = 0; i < conversationModel.length; i++) {
       if (widget.contactId == conversationModel[i].contact.id) {
         currentConversation = conversationModel[i];

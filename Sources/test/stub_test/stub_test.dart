@@ -12,7 +12,7 @@ import 'package:get_it/get_it.dart';
 
 final GetIt _getIt = GetIt.instance;
 
-void main() {
+Future<void> main() async {
   _getIt.registerSingleton<DataStub>(DataStub());
   _getIt.registerSingleton<ConversationService>(ConversationServiceStub());
   _getIt.registerSingleton<MessageService>(MessageServiceStub());
@@ -21,7 +21,7 @@ void main() {
   List<ConversationDTO> conversationsFromData =
       _getIt.get<ConversationService>().getConversations();
   List<ConversationModel> conversations =
-      ConversationsFactory.DTOsToPOCOs(conversationsFromData);
+      await ConversationsFactory.DTOsToPOCOs(conversationsFromData);
 
   print('Conversations:');
   conversations.forEach((conv) {

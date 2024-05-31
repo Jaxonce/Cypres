@@ -8,6 +8,6 @@ class ContactServiceStub extends BaseStub implements ContactService {
   List<ContactDTO> getContacts(String sort) => stub().contacts;
 
   @override
-  ContactDTO getContact(String sort) =>
+  Future<ContactDTO> getContact(String sort) async =>
       stub().contacts.firstWhere((element) => element.id == sort);
 }

@@ -11,9 +11,9 @@ import '../DTOs/conversation_dto.dart';
 final GetIt _getIt = GetIt.instance;
 
 class ConversationsFactory {
-  static ConversationModel DTOToPOCO(ConversationDTO DTO) {
+  static Future<ConversationModel> DTOToPOCO(ConversationDTO DTO) async {
     ContactDTO contactDTO =
-        _getIt.get<ContactService>().getContact(DTO.contactId);
+        await _getIt.get<ContactService>().getContact(DTO.contactId);
 
     return ConversationModel(
         ContactsFactory.DTOToPOCO(contactDTO),
@@ -21,10 +21,11 @@ class ConversationsFactory {
             _getIt.get<MessageService>().getMessages(contactDTO)));
   }
 
-  static List<ConversationModel> DTOsToPOCOs(List<ConversationDTO> DTOs) {
+  static Future<List<ConversationModel>> DTOsToPOCOs(
+      List<ConversationDTO> DTOs) async {
     List<ConversationModel> pocos = [];
     for (var e in DTOs) {
-      pocos.add(DTOToPOCO(e));
+      pocos.add(await DTOToPOCO(e));
     }
 
     return pocos;

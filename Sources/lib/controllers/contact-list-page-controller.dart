@@ -22,6 +22,7 @@ class ContactListPageController {
   int getConversationsNumber() =>
       _conversationService.getConversations().length;
 
-  List<ConversationModel> getConversations() =>
-      ConversationsFactory.DTOsToPOCOs(_conversationService.getConversations());
+  Future<List<ConversationModel>> getConversations() async =>
+      await ConversationsFactory.DTOsToPOCOs(
+          _conversationService.getConversations());
 }
