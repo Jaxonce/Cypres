@@ -13,6 +13,7 @@ import 'package:get_it/get_it.dart';
 
 import 'controllers/contact-list-page-controller.dart';
 import 'controllers/event-list-page-controller.dart';
+import 'controllers/message-page-controller.dart';
 import 'services/stub/data_stub.dart';
 
 final GetIt _getIt = GetIt.instance;
@@ -27,8 +28,8 @@ void init() {
 void _initControllers() {
   _getIt.registerSingleton<ContactListPageController>(
       ContactListPageController());
-  _getIt.registerSingleton<EventListPageController>(
-      EventListPageController());
+  _getIt.registerSingleton<EventListPageController>(EventListPageController());
+  _getIt.registerSingleton<MessagePageController>(MessagePageController());
 }
 
 void _initServices() {

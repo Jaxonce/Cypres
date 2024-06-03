@@ -62,10 +62,7 @@ class _MyAppState extends State<MyApp> {
             nextRoute: "/message",
             buttonText: "Terminer",
             isPassword: true),
-        '/message': (context) => MessagePage(
-              name: chatData[1]['name'],
-              image: chatData[3]['img'],
-            ),
+        '/message': (context) => MessagePage(),
         '/contact': (context) => ContactPage(),
         '/event': (context) => EventPage(),
         //'/test':(context) => ChatScreen(username: "Maxence")

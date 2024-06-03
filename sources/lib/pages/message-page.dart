@@ -1,4 +1,5 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:cypres/controllers/message-page-controller.dart';
 import 'package:cypres/model/contact_model.dart';
 import 'package:cypres/model/conversation_model.dart';
 import 'package:cypres/model/message_model.dart';
@@ -7,16 +8,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
+import '../model/user_model.dart';
+import '../utils/image_converter_utils.dart';
 import '../widget/message/message-bottom-bar-stateful.dart';
 
-class MessagePage extends StatefulWidget {
-  final String name;
-  final String image;
+final GetIt _getIt = GetIt.instance;
 
-  const MessagePage({Key? key, required this.name, required this.image})
-      : super(key: key);
+class MessagePage extends StatefulWidget {
+  final MessagePageController controller = _getIt.get<MessagePageController>();
+
+  MessagePage({super.key});
 
   @override
   State<MessagePage> createState() => _MessagePageState();
@@ -25,6 +29,14 @@ class MessagePage extends StatefulWidget {
 class _MessagePageState extends State<MessagePage> {
   late Image profileImage;
   late ConversationModel currentConversation;
+
+  late UserModel userConnected;
+
+  @override
+  void initState() {
+    super.initState();
+    userConnected = widget.controller.connectUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +87,10 @@ class _MessagePageState extends State<MessagePage> {
                           resizeToAvoidBottomInset: true,
                           child: getBody(currentConversation.messages),
                         ),
-                        MessageBottomBar(contact: currentConversation.contact)
+                        MessageBottomBar(conversationMembers: [
+                          currentConversation.contact,
+                          userConnected
+                        ])
                       ],
                     )),
               ]),
@@ -86,15 +101,17 @@ class _MessagePageState extends State<MessagePage> {
 
   ObstructingPreferredSizeWidget? getTabBar(
       double paddingValue, ContactModel contact) {
+    if (contact.profilePictureBase64 != null) {
+      profileImage = ImageConverterUtils.imageFromBase64String(
+          contact.profilePictureBase64!);
+    }
     return CupertinoNavigationBar(
       middle: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: contact.profilePictureBytes != null
-                ? MemoryImage(contact.profilePictureBytes!)
-                : null,
+            backgroundImage: profileImage.image,
           ),
           const SizedBox(width: 8),
           Padding(

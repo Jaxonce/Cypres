@@ -10,9 +10,9 @@ import 'package:image_picker/image_picker.dart';
 import '../../model/contact_model.dart';
 
 class MessageBottomBar extends StatefulWidget {
-  final ContactModel contact;
+  final List<MemberModel> conversationMembers;
 
-  const MessageBottomBar({super.key, required this.contact});
+  const MessageBottomBar({super.key, required this.conversationMembers});
 
   @override
   _MessageBottomBarState createState() => _MessageBottomBarState();
@@ -68,7 +68,8 @@ class _MessageBottomBarState extends State<MessageBottomBar> {
                             context: context,
                             builder: (BuildContext builder) {
                               return CustomPopUpSurface(
-                                  userList: List.of([widget.contact]));
+                                  conversationMembers:
+                                      widget.conversationMembers);
                             },
                           );
                         },

@@ -37,7 +37,7 @@ class MessageBottomBar_save extends StatelessWidget {
                           showCupertinoModalPopup(
                             context: context,
                             builder: (BuildContext builder) {
-                              return CustomPopUpSurface(userList: [
+                              return CustomPopUpSurface(conversationMembers: [
                                 ContactModel("id", "firstname", "lastname",
                                     "profilePictureBase64")
                               ]);

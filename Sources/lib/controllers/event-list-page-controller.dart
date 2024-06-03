@@ -16,13 +16,16 @@ class EventListPageController {
   final UserService _userService = _getIt.get<UserService>();
   final ContactService _contactService = _getIt.get<ContactService>();
   final EventService _eventService = _getIt.get<EventService>();
-  
+
   UserModel connectUser() =>
       UserFactory.DTOToPOCO(_userService.connect("km1@gmail.com"));
-  
+
   int getEventsNumber() =>
       _eventService.getEventsByCreator(connectUser().id).length;
 
-  List<EventModel> getEvents() =>
-      EventFactory.DTOsToPOCOs(_eventService.getEventsByCreator(connectUser().id));
+  List<EventModel> getEvents(String userId, String contactId) =>
+      EventFactory.DTOsToPOCOs(_eventService.getEvents(userId, contactId));
+
+  EventModel getEventById(String id) =>
+      EventFactory.DTOToPOCO(_eventService.getEventById(id));
 }
