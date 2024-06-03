@@ -1,3 +1,4 @@
+import 'package:cypres/model/contact_model.dart';
 import 'package:cypres/widget/message/popup-surface.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -36,7 +37,10 @@ class MessageBottomBar_save extends StatelessWidget {
                           showCupertinoModalPopup(
                             context: context,
                             builder: (BuildContext builder) {
-                              return const CustomPopUpSurface();
+                              return CustomPopUpSurface(userList: [
+                                ContactModel("id", "firstname", "lastname",
+                                    "profilePictureBase64")
+                              ]);
                             },
                           );
                         },

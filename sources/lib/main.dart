@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
         barBackgroundColor: CupertinoColors.darkBackgroundGray,
       ),
-      initialRoute: '/event',
+      initialRoute: '/contact',
       routes: {
         '/': (context) => const HomePage(),
         '/connection': (context) => const ConnectionChainCustom(

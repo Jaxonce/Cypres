@@ -35,6 +35,7 @@ class _MessagePageState extends State<MessagePage> {
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
 
+    //peut génrérer une erreur si la conv est null
     currentConversation =
         ModalRoute.of(context)!.settings.arguments as ConversationModel;
 
@@ -74,7 +75,7 @@ class _MessagePageState extends State<MessagePage> {
                           resizeToAvoidBottomInset: true,
                           child: getBody(currentConversation.messages),
                         ),
-                        MessageBottomBar()
+                        MessageBottomBar(contact: currentConversation.contact)
                       ],
                     )),
               ]),

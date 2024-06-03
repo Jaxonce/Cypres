@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CustomPopUpSurface extends StatelessWidget {
+import '../../model/member_model.dart';
 
-  const CustomPopUpSurface({Key? key})
+class CustomPopUpSurface extends StatelessWidget {
+  final List<MemberModel> userList;
+
+  const CustomPopUpSurface({Key? key, required this.userList})
       : super(key: key);
 
   @override
@@ -28,36 +31,32 @@ class CustomPopUpSurface extends StatelessWidget {
                   color: const Color(0xff181818),
                   alignment: Alignment.center,
                   width: double.infinity,
-                  height: screenHeight/5,
-                  child: Stack(
-                    children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                            child: const Text("Apps", style: TextStyle(fontSize: 20),),
-                          ),
+                  height: screenHeight / 5,
+                  child: Stack(children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                        child: const Text(
+                          "Apps",
+                          style: TextStyle(fontSize: 20),
                         ),
-                        Align(
-                          alignment:
-                          Alignment.topRight,
-                          child: CupertinoButton(
-                              child: Icon(
-                                  CupertinoIcons.xmark_circle_fill,
-                                  color: CupertinoColors.systemGrey,
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              }),
-                        )
-                  ]
-                  )
-              ),
-            )
-        )
-    );
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: CupertinoButton(
+                          child: Icon(
+                            CupertinoIcons.xmark_circle_fill,
+                            color: CupertinoColors.systemGrey,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          }),
+                    )
+                  ])),
+            )));
   }
 }
-
-
