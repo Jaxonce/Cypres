@@ -8,8 +8,10 @@ final GetIt _getIt = GetIt.instance;
 Future<void> main() async {
   _getIt.registerSingleton<ContactService>(ContactServiceApi());
 
-  ContactDTO contactDTO =
-      await _getIt.get<ContactService>().getContact("test@gmail.com");
+  List<ContactDTO> contactsDTO =
+      await _getIt.get<ContactService>().getContacts("test@gmail.com");
 
-  print('Contact: ${contactDTO.firstname} ${contactDTO.lastname}');
+  contactsDTO.forEach((element) {
+    print('Contact: ${element.firstname} ${element.lastname}');
+  });
 }

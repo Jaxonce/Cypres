@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:super_cupertino_navigation_bar/super_cupertino_navigation_bar.dart';
 
 import '../controllers/contact-list-page-controller.dart';
+import '../model/contact_model.dart';
 
 final GetIt _getIt = GetIt.instance;
 
@@ -21,6 +22,17 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPageState extends State<ContactPage> {
+  List<ContactModel> _contacts = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() async {
+      _contacts = await widget.controller.getContacts();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SuperScaffold(
@@ -50,9 +62,9 @@ class _ContactPageState extends State<ContactPage> {
 
   Widget getBody() {
     return ListView.builder(
-      itemCount: widget.controller.getConversationsNumber(),
+      itemCount: _contacts.length,
       itemBuilder: (context, index) {
-        return ContactItem(contactId: "${1001 + index}");
+        return ContactItem(contact: _contacts[index]);
       },
     );
   }

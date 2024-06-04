@@ -5,24 +5,22 @@ import 'package:cypres/services/interfaces/contact_service.dart';
 import 'package:http/http.dart' as http;
 
 class ContactServiceApi implements ContactService {
-  @override
-  Future<ContactDTO> getContact(String sort) async {
-    final response =
-        await http.get(Uri.parse('http://localhost:5047/User/$sort'));
+  List<ContactDTO> _parseContacts(String responseBody) {
+    final parsed =
+        (jsonDecode(responseBody) as List).cast<Map<String, dynamic>>();
 
-    print(response.body);
-
-    if (response.statusCode == 200) {
-      return ContactDTO.fromJson(
-          jsonDecode(response.body) as Map<String, dynamic>);
-    } else {
-      throw Exception('Failed to load album');
-    }
+    return parsed.map<ContactDTO>((json) => ContactDTO.fromJson(json)).toList();
   }
 
   @override
-  List<ContactDTO> getContacts(String sort) {
-    // TODO: implement getContacts
-    throw UnimplementedError();
+  Future<List<ContactDTO>> getContacts(String sort) async {
+    final response =
+        await http.get(Uri.parse('http://localhost:5047/User/$sort/contacts'));
+
+    if (response.statusCode == 200) {
+      return _parseContacts(response.body);
+    } else {
+      throw Exception('Failed to load contacts');
+    }
   }
 }

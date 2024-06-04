@@ -1,8 +1,4 @@
-import 'dart:convert';
-
-import 'package:cypres/data/factories/conversations_factory.dart';
 import 'package:cypres/model/conversation_model.dart';
-import 'package:cypres/services/interfaces/conversation_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 
@@ -19,10 +15,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() async {
     super.initState();
-    conversation = await ConversationsFactory.DTOToPOCO(_getIt
-        .get<ConversationService>()
-        .getConversations()
-        .singleWhere((conv) => conv.contactId == '1001'));
+    conversation =
+        null; /*await ConversationsFactory.DTOToPOCO(
+        await _getIt.get<ConversationService>().getConversation("1001"));*/
   }
 
   @override
@@ -53,9 +48,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Expanded(
                       child: Image.memory(
-                        base64Decode(conversation!.contact.profilePictureBase64!
-                            .split(',')
-                            .last),
+                        conversation!.contact.profilePictureBytes!,
                         fit:
                             BoxFit.cover, // adjust this according to your needs
                       ),

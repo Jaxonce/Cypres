@@ -1,6 +1,3 @@
-import 'package:cypres/data/DTOs/conversation_dto.dart';
-import 'package:cypres/data/factories/conversations_factory.dart';
-import 'package:cypres/model/conversation_model.dart';
 import 'package:cypres/services/interfaces/contact_service.dart';
 import 'package:cypres/services/interfaces/conversation_service.dart';
 import 'package:cypres/services/interfaces/message_service.dart';
@@ -18,7 +15,7 @@ Future<void> main() async {
   _getIt.registerSingleton<MessageService>(MessageServiceStub());
   _getIt.registerSingleton<ContactService>(ContactServiceStub());
 
-  List<ConversationDTO> conversationsFromData =
+  /*List<ConversationDTO> conversationsFromData =
       _getIt.get<ConversationService>().getConversations();
   List<ConversationModel> conversations =
       await ConversationsFactory.DTOsToPOCOs(conversationsFromData);
@@ -27,5 +24,5 @@ Future<void> main() async {
   conversations.forEach((conv) {
     print('\t${conv.contact.firstname}:');
     conv.messages.forEach((mess) => print('\t\t${mess.content}'));
-  });
+  });*/
 }
