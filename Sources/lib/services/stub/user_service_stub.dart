@@ -5,7 +5,7 @@ import 'base_stub.dart';
 
 class UserServiceStub extends BaseStub implements UserService {
   @override
-  UserDTO connect(String email) => stub().user;
+  Future<UserDTO> connect(String email) async => stub().user;
 
   @override
   void create(UserDTO user) {

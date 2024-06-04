@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
-import '../utils/image_converter_utils.dart';
 import '../widget/message/message-bottom-bar-stateful.dart';
 
 class MessagePage extends StatefulWidget {
@@ -86,17 +85,15 @@ class _MessagePageState extends State<MessagePage> {
 
   ObstructingPreferredSizeWidget? getTabBar(
       double paddingValue, ContactModel contact) {
-    if (contact.profilePictureBase64 != null) {
-      profileImage = ImageConverterUtils.imageFromBase64String(
-          contact.profilePictureBase64!);
-    }
     return CupertinoNavigationBar(
       middle: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: profileImage.image,
+            backgroundImage: contact.profilePictureBytes != null
+                ? MemoryImage(contact.profilePictureBytes!)
+                : null,
           ),
           const SizedBox(width: 8),
           Padding(

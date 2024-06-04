@@ -1,56 +1,38 @@
-import 'dart:convert';
-
-import 'package:cypres/model/conversation_model.dart';
 import 'package:cypres/model/message_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../controllers/contact-list-page-controller.dart';
+import '../../model/contact_model.dart';
 
 final GetIt _getIt = GetIt.instance;
 
 class ContactItem extends StatefulWidget {
-  final String contactId;
+  final ContactModel contact;
 
   final ContactListPageController controller =
       _getIt.get<ContactListPageController>();
 
-  ContactItem({super.key, required this.contactId});
+  ContactItem({super.key, required this.contact});
 
   @override
   State<ContactItem> createState() => _ContactItemState();
 }
 
 class _ContactItemState extends State<ContactItem> {
-  String? base64Image;
-  late List<ConversationModel> conversationModel;
-  late ConversationModel currentConversation;
   late MessageModel lastMessage;
-  late Image profileImage;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-    conversationModel = widget.controller.getConversations();
-    for (var i = 0; i < conversationModel.length; i++) {
-      if (widget.contactId == conversationModel[i].contact.id) {
-        currentConversation = conversationModel[i];
-      }
-    }
-    base64Image = currentConversation.contact.profilePictureBase64;
-    lastMessage = currentConversation.messages.last;
-    if (base64Image != null) {
-      profileImage = imageFromBase64String(base64Image!);
-    }
+    lastMessage = await widget.controller.getLastMessage(widget.contact.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/message',
-            arguments: currentConversation);
+        Navigator.pushNamed(context, '/message', arguments: widget.contact);
       },
       child: Container(
         height: 80,
@@ -62,7 +44,9 @@ class _ContactItemState extends State<ContactItem> {
             ),
             CircleAvatar(
               radius: 25,
-              backgroundImage: profileImage.image,
+              backgroundImage: widget.contact.profilePictureBytes != null
+                  ? MemoryImage(widget.contact.profilePictureBytes!)
+                  : null,
             ),
             const SizedBox(
               width: 10,
@@ -77,7 +61,7 @@ class _ContactItemState extends State<ContactItem> {
                   children: [
                     Expanded(
                         child: Text(
-                            "${currentConversation.contact.firstname} ${currentConversation.contact.lastname}",
+                            "${widget.contact.firstname} ${widget.contact.lastname}",
                             style: const TextStyle(
                                 fontFamily: 'SFProDisplay',
                                 fontWeight: FontWeight.bold,
@@ -91,10 +75,7 @@ class _ContactItemState extends State<ContactItem> {
                   ],
                 ),
                 const SizedBox(width: 30),
-                Text(
-                    currentConversation.messages.isEmpty
-                        ? ""
-                        : lastMessage.content,
+                Text(lastMessage.content.isEmpty ? "" : lastMessage.content,
                     maxLines: 2,
                     style: const TextStyle(
                         fontFamily: 'SFProDisplay',
@@ -110,19 +91,5 @@ class _ContactItemState extends State<ContactItem> {
         ),
       ),
     );
-  }
-
-  Future<void> convertImageToBase64() async {
-    ByteData data = await rootBundle.load('assets/Flag_of_France.png');
-    List<int> bytes = data.buffer.asUint8List();
-    String imageBase64 = base64Encode(Uint8List.fromList(bytes));
-
-    setState(() {
-      base64Image = imageBase64;
-    });
-  }
-
-  Image imageFromBase64String(String base64String) {
-    return Image.memory(base64Decode(base64String));
   }
 }

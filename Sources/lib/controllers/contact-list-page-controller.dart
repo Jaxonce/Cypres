@@ -1,10 +1,11 @@
+import 'package:cypres/data/DTOs/contact_dto.dart';
 import 'package:cypres/data/factories/user-factory.dart';
-import 'package:cypres/model/conversation_model.dart';
+import 'package:cypres/model/contact_model.dart';
 import 'package:cypres/model/user_model.dart';
 import 'package:cypres/services/interfaces/user-service.dart';
 import 'package:get_it/get_it.dart';
 
-import '../data/factories/conversations_factory.dart';
+import '../model/message_model.dart';
 import '../services/interfaces/contact_service.dart';
 import '../services/interfaces/conversation_service.dart';
 
@@ -16,12 +17,19 @@ class ContactListPageController {
   final ConversationService _conversationService =
       _getIt.get<ConversationService>();
 
-  UserModel connectUser() =>
-      UserFactory.DTOToPOCO(_userService.connect("km10@gmail.com"));
+  Future<UserModel> connectUser() async =>
+      UserFactory.DTOToPOCO(await _userService.connect("km10@gmail.com"));
 
-  int getConversationsNumber() =>
-      _conversationService.getConversations().length;
+  Future<MessageModel> getLastMessage(String contactId) async =>
+      MessageModel.DTOToPOCO(
+          await _conversationService.getLastMessage(contactId));
 
-  List<ConversationModel> getConversations() =>
-      ConversationsFactory.DTOsToPOCOs(_conversationService.getConversations());
+  Future<List<ContactModel>> getContacts() async {
+    List<ContactModel> contactPOCOs = [];
+    List<ContactDTO> contactDTOs = await _contactService.getContacts("");
+    contactDTOs.forEach((element) {
+      contactPOCOs.add(ContactModel.DTOToPOCO(element));
+    });
+    return contactPOCOs;
+  }
 }
