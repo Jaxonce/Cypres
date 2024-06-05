@@ -24,13 +24,18 @@ class ContactPage extends StatefulWidget {
 class _ContactPageState extends State<ContactPage> {
   List<ContactModel> _contacts = [];
 
+  Future<void> _loadContacts() async {
+    List<ContactModel> tmp = await widget.controller.getContacts();
+
+    setState(() {
+      _contacts = tmp;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-
-    setState(() async {
-      _contacts = await widget.controller.getContacts();
-    });
+    _loadContacts();
   }
 
   @override
