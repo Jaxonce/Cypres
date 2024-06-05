@@ -1,4 +1,5 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:cypres/controllers/message-page-controller.dart';
 import 'package:cypres/model/contact_model.dart';
 import 'package:cypres/model/conversation_model.dart';
 import 'package:cypres/model/message_model.dart';
@@ -7,24 +8,40 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
 import '../widget/message/message-bottom-bar-stateful.dart';
 
-class MessagePage extends StatefulWidget {
-  final String name;
-  final String image;
+final GetIt _getIt = GetIt.instance;
 
-  const MessagePage({Key? key, required this.name, required this.image})
-      : super(key: key);
+class MessagePage extends StatefulWidget {
+  MessagePage({super.key});
+
+  final MessagePageController controller = _getIt.get<MessagePageController>();
 
   @override
   State<MessagePage> createState() => _MessagePageState();
 }
 
 class _MessagePageState extends State<MessagePage> {
-  late Image profileImage;
-  late ConversationModel currentConversation;
+  ConversationModel? currentConversation;
+
+  Future<void> _loadConversation(ContactModel contact) async {
+    ConversationModel? tmp = await widget.controller.getConversation(contact);
+    setState(() {
+      currentConversation = tmp;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    ContactModel contact =
+        ModalRoute.of(context)?.settings.arguments as ContactModel;
+    _loadConversation(contact);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +56,7 @@ class _MessagePageState extends State<MessagePage> {
         ModalRoute.of(context)!.settings.arguments as ConversationModel;
 
     return CupertinoPageScaffold(
-        navigationBar: getTabBar(paddingValue, currentConversation.contact),
+        navigationBar: getTabBar(paddingValue, currentConversation?.contact),
         child: ColorfulSafeArea(
             color: const Color(0xff181818),
             top: false,
@@ -72,7 +89,7 @@ class _MessagePageState extends State<MessagePage> {
                         CupertinoPageScaffold(
                           backgroundColor: Colors.transparent,
                           resizeToAvoidBottomInset: true,
-                          child: getBody(currentConversation.messages),
+                          child: getBody(currentConversation?.messages ?? []),
                         ),
                         MessageBottomBar()
                       ],
@@ -84,21 +101,21 @@ class _MessagePageState extends State<MessagePage> {
   addFile() {}
 
   ObstructingPreferredSizeWidget? getTabBar(
-      double paddingValue, ContactModel contact) {
+      double paddingValue, ContactModel? contact) {
     return CupertinoNavigationBar(
       middle: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: contact.profilePictureBytes != null
-                ? MemoryImage(contact.profilePictureBytes!)
+            backgroundImage: contact?.profilePictureBytes != null
+                ? MemoryImage(contact!.profilePictureBytes!)
                 : null,
           ),
           const SizedBox(width: 8),
           Padding(
             padding: EdgeInsets.only(right: paddingValue / 2.5),
-            child: Text(contact.firstname,
+            child: Text(contact?.firstname ?? "",
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 17,
@@ -137,7 +154,7 @@ class _MessagePageState extends State<MessagePage> {
       children: List.generate(messagesList.length, (index) {
         return CustomChatBubble(
             isMe: messagesList[index].receiverId ==
-                currentConversation.contact.id,
+                currentConversation?.contact.id,
             message: messagesList[index].content,
             time: messagesList[index].date.hour.toString(),
             isLast: false);
