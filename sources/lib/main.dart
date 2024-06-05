@@ -13,13 +13,13 @@ import 'package:get_it/get_it.dart';
 
 import 'dependency_injection.dart' as di;
 
-void main() async {
+final GetIt _getIt = GetIt.instance;
+
+void main() {
   di.init();
   await dotenv.load(fileName: "assets/.env");
   runApp(MyApp());
 }
-
-final GetIt _getIt = GetIt.instance;
 
 class MyApp extends StatefulWidget {
   final AuthenticationController controller =

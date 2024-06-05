@@ -27,11 +27,26 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
-  late Image profileImage;
-  late ConversationModel currentConversation;
-  late ContactModel contactConversation;
+  ConversationModel? currentConversation;
+  ContactModel? contactConversation;
+  UserModel? userConnected;
+  
+  Future<void> _loadConversation(ContactModel contact) async {
+    ConversationModel? tmp = await widget.controller.getConversation(contact);
+    setState(() {
+      currentConversation = tmp;
+    });
+  }
 
-  late UserModel? userConnected;
+  @override
+  void initState() {
+    super.initState();
+
+    ContactModel contact =
+        ModalRoute.of(context)?.settings.arguments as ContactModel;
+    _loadConversation(contact);
+  }
+
 
   @override
   void initState() {
@@ -54,7 +69,7 @@ class _MessagePageState extends State<MessagePage> {
     //get conversation
     //TODO
     return CupertinoPageScaffold(
-        navigationBar: getTabBar(paddingValue, currentConversation.contact),
+        navigationBar: getTabBar(paddingValue, currentConversation?.contact),
         child: ColorfulSafeArea(
             color: const Color(0xff181818),
             top: false,
@@ -87,7 +102,7 @@ class _MessagePageState extends State<MessagePage> {
                         CupertinoPageScaffold(
                           backgroundColor: Colors.transparent,
                           resizeToAvoidBottomInset: true,
-                          child: getBody(currentConversation.messages),
+                          child: getBody(currentConversation?.messages ?? []),
                         ),
                         MessageBottomBar(conversationMembers: [
                           contactConversation,
@@ -102,7 +117,7 @@ class _MessagePageState extends State<MessagePage> {
   addFile() {}
 
   ObstructingPreferredSizeWidget? getTabBar(
-      double paddingValue, ContactModel contact) {
+      double paddingValue, ContactModel? contact) {
     if (contact.profilePictureBytes != null) {
       profileImage = ImageConverterUtils.imageFromBase64String(
           contact.profilePictureBytes.toString());
@@ -113,12 +128,14 @@ class _MessagePageState extends State<MessagePage> {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: profileImage.image,
+            backgroundImage: contact?.profilePictureBytes != null
+                ? MemoryImage(contact!.profilePictureBytes!)
+                : null,
           ),
           const SizedBox(width: 8),
           Padding(
             padding: EdgeInsets.only(right: paddingValue / 2.5),
-            child: Text(contact.firstname,
+            child: Text(contact?.firstname ?? "",
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 17,
@@ -157,7 +174,7 @@ class _MessagePageState extends State<MessagePage> {
       children: List.generate(messagesList.length, (index) {
         return CustomChatBubble(
             isMe: messagesList[index].receiverId ==
-                currentConversation.contact.id,
+                currentConversation?.contact.id,
             message: messagesList[index].content,
             time: messagesList[index].date.hour.toString(),
             isLast: false);
