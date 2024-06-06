@@ -9,7 +9,7 @@ class UserServiceApi implements UserService {
   @override
   Future<UserDTO> connect(String email) async {
     final response =
-        await http.get(Uri.parse('http://localhost:5047/User/$email'));
+        await http.get(Uri.parse('http://10.0.2.2:5047/User/$email'));
     if (response.statusCode == 200) {
       return UserDTO.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>);

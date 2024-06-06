@@ -20,12 +20,21 @@ class ContactItem extends StatefulWidget {
 }
 
 class _ContactItemState extends State<ContactItem> {
-  late MessageModel lastMessage;
+  MessageModel? lastMessage;
+
+  Future<void> _loadLastMessage() async {
+    MessageModel tmp =
+        await widget.controller.getLastMessage(widget.contact.id);
+
+    setState(() {
+      lastMessage = tmp;
+    });
+  }
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    lastMessage = await widget.controller.getLastMessage(widget.contact.id);
+    _loadLastMessage();
   }
 
   @override
@@ -69,13 +78,20 @@ class _ContactItemState extends State<ContactItem> {
                                 letterSpacing: 0.4))),
                     Flexible(
                         child: Text(
-                            "${lastMessage.date.hour}:${lastMessage.date.minute < 10 ? "0${lastMessage.date.minute}" : lastMessage.date.minute}",
+                            lastMessage != null
+                                ? "${lastMessage!.date.hour}:${lastMessage!.date.minute < 10 ? "0${lastMessage!.date.minute}" : lastMessage!.date.minute}"
+                                : "",
                             style: const TextStyle(
                                 fontFamily: 'SFProDisplay', fontSize: 14))),
                   ],
                 ),
                 const SizedBox(width: 30),
-                Text(lastMessage.content.isEmpty ? "" : lastMessage.content,
+                Text(
+                    lastMessage != null
+                        ? lastMessage!.content.isEmpty
+                            ? ""
+                            : lastMessage!.content
+                        : "",
                     maxLines: 2,
                     style: const TextStyle(
                         fontFamily: 'SFProDisplay',
