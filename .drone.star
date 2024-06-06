@@ -21,7 +21,7 @@ def Build_App():
         "name": "app-build",
         "image": "ghcr.io/cirruslabs/flutter:3.19.2",
         "commands": [
-            "cd ./Sources/",
+            "cd ./sources/",
             "flutter build apk"
         ]
     }
@@ -42,7 +42,7 @@ def Code_Analysis():
             "unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/",
             "export PATH=$SONAR_SCANNER_HOME/bin:$PATH",
             "export SONAR_SCANNER_OPTS='-server'",
-            "sonar-scanner -D sonar.projectKey=Cypres -D sonar.sources=./Sources/ -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.login=$${PLUGIN_SONAR_TOKEN}"
+            "sonar-scanner -D sonar.projectKey=Cypres -D sonar.sources=./sources/ -D sonar.host.url=https://codefirst.iut.uca.fr/sonar -D sonar.login=$${PLUGIN_SONAR_TOKEN}"
         ],
         "depends_on": [ "app-build" ],
     }
