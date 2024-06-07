@@ -12,7 +12,7 @@ def main(ctx):
         pipeline.append(CI_Empty())
         return pipeline
     
-    CI_Pipeline["steps"] = [Build_App(), Code_Analysis()]
+    CI_Pipeline["steps"] = [Build_App(),Build_Web(), Code_Analysis()]
     pipeline.append(CI_Pipeline)
     return pipeline
 
@@ -24,6 +24,15 @@ def Build_App():
             "cd ./sources/",
             "flutter build apk"
         ]
+    }
+def Build_Web():
+    return {
+	"name": "build-web",
+	"image": "ghcr.io/cirruslabs/flutter:3.19.2",
+	"commands": [
+	    "cd ./sources/",
+	    "flutter build web --web-renderer canvaskit"
+	]
     }
 
 def Code_Analysis():

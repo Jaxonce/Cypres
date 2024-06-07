@@ -13,11 +13,11 @@ steps:
       - cd ./sources/
       - flutter build apk
 
-  #- name: build-web
-  #  image: ghcr.io/cirruslabs/flutter:3.19.2
-  #  commands:
-  #    - cd ./Sources/
-  #    - flutter build web --web-renderer canvaskit
+  - name: build-web
+    image: ghcr.io/cirruslabs/flutter:3.19.2
+    commands:
+      - cd ./Sources/
+      - flutter build web --web-renderer canvaskit
 
   - name: code-analysis
     image: ghcr.io/cirruslabs/flutter:3.19.2
