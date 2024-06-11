@@ -1,3 +1,4 @@
+import 'package:cypres/controllers/message-page-controller.dart';
 import 'package:cypres/controllers/authentication-controller.dart';
 import 'package:cypres/controllers/event-add-controller.dart';
 import 'package:cypres/services/api/contact_service_api.dart';
@@ -30,6 +31,7 @@ void init() {
 void _initControllers() {
   _getIt.registerSingleton<ContactListPageController>(
       ContactListPageController());
+  _getIt.registerSingleton<MessagePageController>(MessagePageController());
   _getIt.registerSingleton<EventListPageController>(EventListPageController());
   _getIt.registerSingleton<MessagePageController>(MessagePageController());
   _getIt.registerSingleton<EventAddController>(EventAddController());

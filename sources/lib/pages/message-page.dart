@@ -30,7 +30,7 @@ class _MessagePageState extends State<MessagePage> {
   ConversationModel? currentConversation;
   ContactModel? contactConversation;
   UserModel? userConnected;
-  
+
   Future<void> _loadConversation(ContactModel contact) async {
     ConversationModel? tmp = await widget.controller.getConversation(contact);
     setState(() {
@@ -45,12 +45,6 @@ class _MessagePageState extends State<MessagePage> {
     ContactModel contact =
         ModalRoute.of(context)?.settings.arguments as ContactModel;
     _loadConversation(contact);
-  }
-
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override

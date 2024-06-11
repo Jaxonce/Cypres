@@ -20,6 +20,8 @@ class ContactListPageController {
   //     UserModel.DTOToPOCO(await _userService.connect("test@gmail.com"));
 
   Future<UserModel?> getUserConnected() async => await UserModel.getInstance();
+  Future<UserModel> connectUser() async =>
+      UserModel.DTOToPOCO(await _userService.connect("vincent@gmail.com"));
 
   Future<MessageModel> getLastMessage(String contactId) async =>
       MessageModel.DTOToPOCO(
