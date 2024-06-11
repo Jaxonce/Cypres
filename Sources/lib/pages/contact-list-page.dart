@@ -13,9 +13,7 @@ class ContactPage extends StatefulWidget {
   final ContactListPageController controller =
       _getIt.get<ContactListPageController>();
 
-  ContactPage({
-    super.key,
-  });
+  ContactPage({super.key});
 
   @override
   State<ContactPage> createState() => _ContactPageState();

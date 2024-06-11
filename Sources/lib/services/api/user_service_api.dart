@@ -14,7 +14,7 @@ class UserServiceApi implements UserService {
       return UserDTO.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>);
     } else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load user');
     }
   }
 

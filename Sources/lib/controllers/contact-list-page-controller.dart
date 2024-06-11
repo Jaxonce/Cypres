@@ -17,7 +17,7 @@ class ContactListPageController {
       _getIt.get<ConversationService>();
 
   Future<UserModel> connectUser() async =>
-      UserModel.DTOToPOCO(await _userService.connect("test@gmail.com"));
+      UserModel.DTOToPOCO(await _userService.connect("vincent@gmail.com"));
 
   Future<MessageModel> getLastMessage(String contactId) async =>
       MessageModel.DTOToPOCO(

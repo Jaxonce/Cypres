@@ -1,3 +1,4 @@
+import 'package:cypres/controllers/message-page-controller.dart';
 import 'package:cypres/services/api/contact_service_api.dart';
 import 'package:cypres/services/api/conversation_service_api.dart';
 import 'package:cypres/services/api/user_service_api.dart';
@@ -23,6 +24,7 @@ void init() {
 void _initControllers() {
   _getIt.registerSingleton<ContactListPageController>(
       ContactListPageController());
+  _getIt.registerSingleton<MessagePageController>(MessagePageController());
 }
 
 void _initServices() {

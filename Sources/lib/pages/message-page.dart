@@ -16,9 +16,9 @@ import '../widget/message/message-bottom-bar-stateful.dart';
 final GetIt _getIt = GetIt.instance;
 
 class MessagePage extends StatefulWidget {
-  MessagePage({super.key});
-
   final MessagePageController controller = _getIt.get<MessagePageController>();
+
+  MessagePage({super.key});
 
   @override
   State<MessagePage> createState() => _MessagePageState();
@@ -29,6 +29,7 @@ class _MessagePageState extends State<MessagePage> {
 
   Future<void> _loadConversation(ContactModel contact) async {
     ConversationModel? tmp = await widget.controller.getConversation(contact);
+    print(tmp!.messages.length);
     setState(() {
       currentConversation = tmp;
     });
@@ -51,9 +52,6 @@ class _MessagePageState extends State<MessagePage> {
     // Calculer le pourcentage pour le padding
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
-
-    currentConversation =
-        ModalRoute.of(context)!.settings.arguments as ConversationModel;
 
     return CupertinoPageScaffold(
         navigationBar: getTabBar(paddingValue, currentConversation?.contact),
