@@ -1,5 +1,6 @@
 import 'package:cypres/json/chat-json.dart';
 import 'package:cypres/pages/contact-list-page.dart';
+import 'package:cypres/pages/event-list-page.dart';
 import 'package:cypres/pages/home-page.dart';
 import 'package:cypres/pages/message-page.dart';
 import 'package:cypres/widget/connection/connection-chain-custom.dart';
@@ -32,7 +33,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
         barBackgroundColor: CupertinoColors.darkBackgroundGray,
       ),
-      initialRoute: '/contact',
+      initialRoute: '/event',
       routes: {
         '/': (context) => const HomePage(),
         '/connection': (context) => const ConnectionChainCustom(
@@ -65,7 +66,8 @@ class _MyAppState extends State<MyApp> {
               name: chatData[1]['name'],
               image: chatData[3]['img'],
             ),
-        '/contact': (context) => ContactPage()
+        '/contact': (context) => ContactPage(),
+        '/event': (context) => EventPage(),
         //'/test':(context) => ChatScreen(username: "Maxence")
       },
     );
