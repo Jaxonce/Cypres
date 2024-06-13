@@ -28,4 +28,14 @@ class EventListPageController {
 
   EventModel getEventById(String id) =>
       EventFactory.DTOToPOCO(_eventService.getEventById(id));
+
+  Future<void> deleteEvent(String id) async =>
+      await _eventService.deleteEvent(id);
+
+  void addEvent(EventModel event) =>
+      _eventService.addEvent(EventFactory.POCOToDTO(event));
+
+  void editEvent(EventModel oldEvent, EventModel newEvent) =>
+      _eventService.editEvent(
+          EventFactory.POCOToDTO(oldEvent), EventFactory.POCOToDTO(newEvent));
 }

@@ -1,5 +1,6 @@
 import 'package:cypres/json/chat-json.dart';
 import 'package:cypres/pages/contact-list-page.dart';
+import 'package:cypres/pages/edit-event-page.dart';
 import 'package:cypres/pages/event-list-page.dart';
 import 'package:cypres/pages/home-page.dart';
 import 'package:cypres/pages/message-page.dart';
@@ -65,6 +66,8 @@ class _MyAppState extends State<MyApp> {
         '/message': (context) => MessagePage(),
         '/contact': (context) => ContactPage(),
         '/event': (context) => EventPage(),
+        '/event-add': (context) => EditEventPage(),
+        '/event/edit': (context) => EditEventPage()
         //'/test':(context) => ChatScreen(username: "Maxence")
       },
     );

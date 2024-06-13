@@ -2,6 +2,7 @@ import 'package:cypres/services/stub/base_stub.dart';
 
 import '../../data/DTOs/event_dto.dart';
 import '../interfaces/event_service.dart';
+import 'package:uuid/uuid.dart';
 
 class EventServiceStub extends BaseStub implements EventService {
   @override
@@ -10,7 +11,15 @@ class EventServiceStub extends BaseStub implements EventService {
 
   @override
   void addEvent(EventDTO e) {
+    e.id = Uuid().v4().toString();
     stub().events.add(e);
+  }
+
+  @override
+  void editEvent(EventDTO oldEvent, EventDTO newEvent) {
+    var index =
+        stub().events.indexWhere((element) => element.id == oldEvent.id);
+    stub().events[index] = newEvent;
   }
 
   @override
@@ -26,5 +35,10 @@ class EventServiceStub extends BaseStub implements EventService {
   @override
   EventDTO getEventById(String id) {
     return stub().events.firstWhere((element) => element.id == id);
+  }
+
+  @override
+  Future<void> deleteEvent(String id) async {
+    stub().events.removeWhere((element) => element.id == id);
   }
 }

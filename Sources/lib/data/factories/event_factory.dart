@@ -23,4 +23,9 @@ class EventFactory {
     }
     return pocos;
   }
+
+  static EventDTO POCOToDTO(EventModel POCO) {
+    return EventDTO(POCO.id, POCO.name, POCO.description, POCO.location,
+        POCO.beginDate, POCO.endDate, UserFactory.POCOToDTO(POCO.creator));
+  }
 }

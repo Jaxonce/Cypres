@@ -80,7 +80,15 @@ class _EventPageState extends State<EventPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CupertinoButton(
-                    onPressed: addEvent(),
+                    onPressed: () async {
+                      final newEvent =
+                          await Navigator.pushNamed(context, "/event-add");
+                      if (newEvent != null) {
+                        setState(() {
+                          widget.controller.addEvent(newEvent as EventModel);
+                        });
+                      }
+                    },
                     child: const Icon(
                       CupertinoIcons.add,
                       color: CupertinoColors.activeBlue,
@@ -142,9 +150,10 @@ class _EventPageState extends State<EventPage> {
                       events[index].location,
                       events[index].beginDate,
                       events[index].endDate,
-                      events[index].creator)));
+                      events[index].creator),
+                  onUpdated: () {
+                    setState(() {});
+                  }));
         });
   }
-
-  addEvent() {}
 }
