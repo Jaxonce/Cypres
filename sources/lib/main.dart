@@ -6,14 +6,16 @@ import 'package:cypres/pages/home-page.dart';
 import 'package:cypres/pages/message-page.dart';
 import 'package:cypres/widget/connection/connection-chain-custom.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 
 import 'dependency_injection.dart' as di;
 
 final GetIt _getIt = GetIt.instance;
 
-void main() {
+void main() async {
   di.init();
+  await dotenv.load(fileName: "assets/.env");
   runApp(const MyApp());
 }
 
@@ -34,35 +36,41 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
         barBackgroundColor: CupertinoColors.darkBackgroundGray,
       ),
-      initialRoute: '/contact',
+      initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
         '/connection': (context) => const ConnectionChainCustom(
             title: "Adresse mail",
             hintText: "louis.dupont@gmail.com",
             nextRoute: "/connection/password",
-            type: TextInputType.emailAddress),
+            type: TextInputType.emailAddress,
+            isConnection: true,
+        field: Field.mail,),
         '/connection/password': (context) => const ConnectionChainCustom(
             title: "Mot de passe",
             hintText: "••••••••",
-            nextRoute: "/",
+            nextRoute: "/message",
             buttonText: "Se Connecter",
-            isPassword: true),
+            isPassword: true,
+            isConnection: true,
+        field: Field.password,),
         '/signup': (context) => const ConnectionChainCustom(
-            title: "Nom", hintText: "Dupont", nextRoute: "/signup/firstname"),
+            title: "Nom", hintText: "Dupont", nextRoute: "/signup/firstname", field: Field.lastname,),
         '/signup/firstname': (context) => const ConnectionChainCustom(
-            title: "Prénom", hintText: "Louis", nextRoute: "/signup/mail"),
+            title: "Prénom", hintText: "Louis", nextRoute: "/signup/mail", field: Field.firstname,),
         '/signup/mail': (context) => const ConnectionChainCustom(
             title: "Adresse mail",
             hintText: "louis.dupont@gmail.com",
             nextRoute: "/signup/password",
-            type: TextInputType.emailAddress),
+            type: TextInputType.emailAddress,
+        field: Field.mail,),
         '/signup/password': (context) => const ConnectionChainCustom(
             title: "Mot de passe",
             hintText: "••••••••",
             nextRoute: "/message",
             buttonText: "Terminer",
-            isPassword: true),
+            isPassword: true,
+        field: Field.password,),
         '/message': (context) => MessagePage(),
         '/contact': (context) => ContactPage(),
         '/event': (context) => EventPage(),

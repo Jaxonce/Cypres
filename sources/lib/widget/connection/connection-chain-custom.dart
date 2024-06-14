@@ -1,25 +1,49 @@
+import 'package:cypres/utils/local_storage_service.dart';
 import 'package:cypres/widget/connection/custom-textfield.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
 
+import '../../controllers/authentication-controller.dart';
+import '../../data/DTOs/user_dto.dart';
+import '../../model/user_model.dart';
 import 'big-button.dart';
 
-class ConnectionChainCustom extends StatelessWidget {
+final GetIt _getIt = GetIt.instance;
+
+enum Field {lastname, firstname, mail, password}
+
+class ConnectionChainCustom extends StatefulWidget {
   final String title;
   final String hintText;
   final String nextRoute;
   final String buttonText;
   final bool isPassword;
+  final bool isConnection;
   final TextInputType type;
+  final Field field;
 
-  const ConnectionChainCustom(
-      {Key? key,
-      required this.title,
-      required this.hintText,
-      required this.nextRoute,
-      this.buttonText = "Continuer",
-      this.isPassword = false,
-      this.type = TextInputType.text})
+  const ConnectionChainCustom({Key? key,
+    required this.title,
+    required this.hintText,
+    required this.nextRoute,
+    this.buttonText = "Continuer",
+    this.isPassword = false,
+    this.type = TextInputType.text,
+    this.isConnection = false,
+    required this.field
+  })
       : super(key: key);
+
+  @override
+  State<ConnectionChainCustom> createState() => _ConnectionChainCustomState();
+}
+
+class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
+  final AuthenticationController controller = _getIt.get<AuthenticationController>();
+
+  late var userBuilder;
+
+  final textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +53,9 @@ class ConnectionChainCustom extends StatelessWidget {
     // Calculer le pourcentage pour le padding
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
+
+    userBuilder =
+    ModalRoute.of(context)!.settings.arguments;
 
     return CupertinoPageScaffold(
       child: Container(
@@ -48,7 +75,7 @@ class ConnectionChainCustom extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                title,
+                widget.title,
                 textAlign: TextAlign.left,
                 style: const TextStyle(
                   fontSize: 26,
@@ -62,13 +89,36 @@ class ConnectionChainCustom extends StatelessWidget {
               SizedBox(height: paddingValue / 1.4),
               // Espacement entre l'image et le texte
               CustomTextField(
-                  text: hintText, obscureText: isPassword, keyboardType: type),
+                  text: widget.hintText, obscureText: widget.isPassword, keyboardType: widget.type, controller: textController,),
               SizedBox(height: paddingValue / 2.5),
               // Espacement entre le texte et le bouton
               BigButton(
-                text: buttonText,
-                onPressed: () {
-                  Navigator.pushNamed(context, nextRoute);
+                text: widget.buttonText,
+                onPressed: () async {
+                  UserModel user;
+                  if (userBuilder != null) {
+                    user = userBuilder as UserModel;
+                  } else {
+                    user = UserModel("","","","","","");
+                  }
+                  switch (widget.field) {
+                    case Field.lastname :
+                      user.lastname = textController.text;
+                    case Field.firstname :
+                      user.firstname = textController.text;
+                    case Field.mail :
+                      user.mailAddress = textController.text;
+                    case Field.password :
+                      user.password = textController.text;
+                  }
+                  if (widget.nextRoute == "/message") {
+                    if (widget.isConnection) {
+                      await getAndSaveToken(user.mailAddress,user.password);
+                    } else {
+                      await register(user);
+                    }
+                  }
+                  Navigator.pushNamed(context, widget.nextRoute, arguments: user);
                 },
               ),
               // Espacement entre le bouton et le texte
@@ -77,5 +127,17 @@ class ConnectionChainCustom extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> getAndSaveToken(String email, String password) async {
+    String token = await controller.login(email, password);
+
+    saveToken(token);
+  }
+
+  Future<void> register(UserModel user) async {
+    UserModel userModel = await controller.register(UserDTO.POCOToDTO(user));
+
+    getAndSaveToken(userModel.mailAddress, userModel.password);
   }
 }

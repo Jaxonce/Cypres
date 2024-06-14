@@ -1,6 +1,8 @@
 import 'package:cypres/data/DTOs/event_dto.dart';
-import 'package:cypres/data/factories/user-factory.dart';
+import 'package:cypres/data/DTOs/user_dto.dart';
 import 'package:cypres/model/event_model.dart';
+
+import '../../model/user_model.dart';
 
 class EventFactory {
   static EventModel DTOToPOCO(EventDTO DTO) {
@@ -11,7 +13,7 @@ class EventFactory {
       DTO.location,
       DTO.beginDate,
       DTO.endDate,
-      UserFactory.DTOToPOCO(DTO.creator),
+      UserModel.DTOToPOCO(DTO.creator),
       DTO.sync,
     );
   }
@@ -26,6 +28,6 @@ class EventFactory {
 
   static EventDTO POCOToDTO(EventModel POCO) {
     return EventDTO(POCO.id, POCO.name, POCO.description, POCO.location,
-        POCO.beginDate, POCO.endDate, UserFactory.POCOToDTO(POCO.creator));
+        POCO.beginDate, POCO.endDate, UserDTO.POCOToDTO(POCO.creator));
   }
 }

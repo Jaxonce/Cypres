@@ -68,7 +68,7 @@ class _EditEventPageState extends State<EditEventPage> {
                 bottom: BorderSide(
                     color: Color.fromRGBO(255, 255, 255, 0.15), width: 1)),
             actions: CupertinoButton(
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState!.validate()) {
                   print("Form valid");
                   endDate = DateTime(
@@ -87,7 +87,7 @@ class _EditEventPageState extends State<EditEventPage> {
                       locationController.text,
                       beginDate,
                       endDate,
-                      widget.controller.connectUser(),
+                      await widget.controller.connectUser(),
                       switchValue);
                   // ScaffoldMessenger.of(context).showSnackBar(
                   //     const SnackBar(content: Text("Ajout en cours...")));

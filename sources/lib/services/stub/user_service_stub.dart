@@ -11,4 +11,16 @@ class UserServiceStub extends BaseStub implements UserService {
   void create(UserDTO user) {
     stub().user = user;
   }
+
+  @override
+  Future<UserDTO> register(UserDTO userDTO) {
+    // TODO: implement register
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> login(String email, String password) {
+    // TODO: implement login
+    throw UnimplementedError();
+  }
 }

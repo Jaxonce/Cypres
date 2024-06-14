@@ -1,5 +1,4 @@
 import 'package:cypres/data/factories/event_factory.dart';
-import 'package:cypres/data/factories/user-factory.dart';
 import 'package:cypres/model/contact_model.dart';
 import 'package:cypres/model/event_model.dart';
 import 'package:cypres/model/user_model.dart';
@@ -17,11 +16,11 @@ class EventListPageController {
   final ContactService _contactService = _getIt.get<ContactService>();
   final EventService _eventService = _getIt.get<EventService>();
 
-  UserModel connectUser() =>
-      UserFactory.DTOToPOCO(_userService.connect("km1@gmail.com"));
+  Future<UserModel> connectUser() async =>
+      UserModel.DTOToPOCO(await _userService.connect("km1@gmail.com"));
 
-  int getEventsNumber() =>
-      _eventService.getEventsByCreator(connectUser().id).length;
+  // int getEventsNumber() =>
+  //     _eventService.getEventsByCreator(connectUser()..id).length;
 
   List<EventModel> getEvents(String userId, String contactId) =>
       EventFactory.DTOsToPOCOs(_eventService.getEvents(userId, contactId));

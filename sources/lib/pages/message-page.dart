@@ -33,9 +33,9 @@ class _MessagePageState extends State<MessagePage> {
   late UserModel userConnected;
 
   @override
-  void initState() {
+  void initState() async{
     super.initState();
-    userConnected = widget.controller.connectUser();
+    userConnected = await widget.controller.connectUser();
   }
 
   @override
@@ -101,9 +101,9 @@ class _MessagePageState extends State<MessagePage> {
 
   ObstructingPreferredSizeWidget? getTabBar(
       double paddingValue, ContactModel contact) {
-    if (contact.profilePictureBase64 != null) {
+    if (contact.profilePictureBytes != null) {
       profileImage = ImageConverterUtils.imageFromBase64String(
-          contact.profilePictureBase64!);
+          contact.profilePictureBytes.toString()!);
     }
     return CupertinoNavigationBar(
       middle: Row(

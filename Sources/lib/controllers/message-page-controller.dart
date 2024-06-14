@@ -1,4 +1,3 @@
-import 'package:cypres/data/factories/user-factory.dart';
 import 'package:cypres/services/interfaces/message_service.dart';
 import 'package:cypres/services/interfaces/user-service.dart';
 import 'package:get_it/get_it.dart';
@@ -11,6 +10,6 @@ class MessagePageController {
   final MessageService _messageService = _getIt.get<MessageService>();
   final UserService _userService = _getIt.get<UserService>();
 
-  UserModel connectUser() =>
-      UserFactory.DTOToPOCO(_userService.connect("km1@gmail.com"));
+  Future<UserModel> connectUser() async =>
+      UserModel.DTOToPOCO(await _userService.connect("km1@gmail.com"));
 }

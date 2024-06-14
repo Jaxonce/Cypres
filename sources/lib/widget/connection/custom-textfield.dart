@@ -5,8 +5,9 @@ class CustomTextField extends StatelessWidget {
   final String text;
   final bool obscureText;
   final TextInputType keyboardType;
+  final TextEditingController controller;
 
-  const CustomTextField({Key? key, required this.text, this.obscureText = false, this.keyboardType = TextInputType.text})
+  const CustomTextField({Key? key, required this.text, this.obscureText = false, this.keyboardType = TextInputType.text, required this.controller})
       : super(key: key);
 
   @override
@@ -18,6 +19,7 @@ class CustomTextField extends StatelessWidget {
         height: screenWidth/6.2,
         child: Container(
           child: CupertinoTextField(
+            controller: controller,
             placeholder: text,
             placeholderStyle: const TextStyle(
               color: Color.fromRGBO(255, 255, 255, 0.45),
