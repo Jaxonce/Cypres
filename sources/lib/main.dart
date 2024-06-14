@@ -6,7 +6,6 @@ import 'package:cypres/pages/message-page.dart';
 import 'package:cypres/widget/connection/connection-chain-custom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get_it/get_it.dart';
 
 import 'dependency_injection.dart' as di;
 
