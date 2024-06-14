@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:cypres/controllers/event-list-page-controller.dart';
-import 'package:cypres/data/DTOs/user_dto.dart';
 import 'package:cypres/model/event_model.dart';
 import 'package:cypres/widget/event/event-item.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,7 +44,6 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
 
     final ContactModel contact =
         ModalRoute.of(context)!.settings.arguments as ContactModel;

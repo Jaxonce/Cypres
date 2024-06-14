@@ -41,7 +41,6 @@ class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
 
     // Calculer le pourcentage pour le padding
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
@@ -103,7 +102,7 @@ class _MessagePageState extends State<MessagePage> {
       double paddingValue, ContactModel contact) {
     if (contact.profilePictureBytes != null) {
       profileImage = ImageConverterUtils.imageFromBase64String(
-          contact.profilePictureBytes.toString()!);
+          contact.profilePictureBytes.toString());
     }
     return CupertinoNavigationBar(
       middle: Row(

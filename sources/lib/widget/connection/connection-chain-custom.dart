@@ -47,7 +47,6 @@ class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     // Calculer le pourcentage pour le padding

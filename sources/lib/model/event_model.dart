@@ -1,5 +1,4 @@
 import 'package:cypres/model/user_model.dart';
-import 'package:uuid/uuid.dart';
 
 import '../data/DTOs/event_dto.dart';
 

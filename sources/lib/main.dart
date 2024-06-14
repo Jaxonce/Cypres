@@ -1,4 +1,3 @@
-import 'package:cypres/json/chat-json.dart';
 import 'package:cypres/pages/contact-list-page.dart';
 import 'package:cypres/pages/edit-event-page.dart';
 import 'package:cypres/pages/event-list-page.dart';
@@ -10,8 +9,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 
 import 'dependency_injection.dart' as di;
-
-final GetIt _getIt = GetIt.instance;
 
 void main() async {
   di.init();
