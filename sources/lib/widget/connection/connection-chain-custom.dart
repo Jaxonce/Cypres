@@ -22,7 +22,7 @@ class ConnectionChainCustom extends StatefulWidget {
   final TextInputType type;
   final Field field;
 
-  const ConnectionChainCustom({Key? key,
+  const ConnectionChainCustom({super.key,
     required this.title,
     required this.hintText,
     required this.nextRoute,
@@ -31,8 +31,7 @@ class ConnectionChainCustom extends StatefulWidget {
     this.type = TextInputType.text,
     this.isConnection = false,
     required this.field
-  })
-      : super(key: key);
+  });
 
   @override
   State<ConnectionChainCustom> createState() => _ConnectionChainCustomState();
@@ -40,6 +39,8 @@ class ConnectionChainCustom extends StatefulWidget {
 
 class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
   final AuthenticationController controller = _getIt.get<AuthenticationController>();
+
+  late var newNextRoute;
 
   late var userBuilder;
 
@@ -53,8 +54,11 @@ class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
 
+    //permet de récupérer les arguments passés à la page pour construire le user
     userBuilder =
     ModalRoute.of(context)!.settings.arguments;
+
+    newNextRoute = widget.nextRoute;
 
     return CupertinoPageScaffold(
       child: Container(
@@ -110,14 +114,17 @@ class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
                     case Field.password :
                       user.password = textController.text;
                   }
-                  if (widget.nextRoute == "/message") {
+                  if (widget.field == Field.mail) {
+                    await isUserExist(user.mailAddress);
+                  }
+                  if (widget.field == Field.password) {
                     if (widget.isConnection) {
                       await getAndSaveToken(user.mailAddress,user.password);
                     } else {
                       await register(user);
                     }
                   }
-                  Navigator.pushNamed(context, widget.nextRoute, arguments: user);
+                  Navigator.pushNamed(context, newNextRoute, arguments: user);
                 },
               ),
               // Espacement entre le bouton et le texte
@@ -138,5 +145,15 @@ class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
     UserModel userModel = await controller.register(UserDTO.POCOToDTO(user));
 
     getAndSaveToken(userModel.mailAddress, userModel.password);
+  }
+
+  Future<void> isUserExist(String email) async {
+    await controller.isUserExist(email).then((value) {
+      if (value) {
+        setState(() {
+          newNextRoute = '/connection/password';
+        });
+      }
+    });
   }
 }

@@ -1,28 +1,52 @@
+import 'package:cypres/controllers/authentication-controller.dart';
 import 'package:cypres/pages/contact-list-page.dart';
 import 'package:cypres/pages/edit-event-page.dart';
 import 'package:cypres/pages/event-list-page.dart';
 import 'package:cypres/pages/home-page.dart';
 import 'package:cypres/pages/message-page.dart';
+import 'package:cypres/utils/local_storage_service.dart';
 import 'package:cypres/widget/connection/connection-chain-custom.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get_it/get_it.dart';
 
 import 'dependency_injection.dart' as di;
 
 void main() async {
   di.init();
   await dotenv.load(fileName: "assets/.env");
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
+final GetIt _getIt = GetIt.instance;
+
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final AuthenticationController controller =
+  _getIt.get<AuthenticationController>();
+  MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+
+  var token = getSavedToken();
+  var initialRoute = '/';
+
+  void checkToken() async {
+    var token = await getSavedToken();
+    if (token != null) {
+      widget.controller.verifyToken(token).then((value) {
+        if (value) {
+          setState(() {
+            initialRoute = '/contact';
+          });
+        }
+      });
+    }
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -32,7 +56,7 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
         barBackgroundColor: CupertinoColors.darkBackgroundGray,
       ),
-      initialRoute: '/',
+      initialRoute: initialRoute,
       routes: {
         '/': (context) => const HomePage(),
         '/connection': (context) => const ConnectionChainCustom(
@@ -50,14 +74,14 @@ class _MyAppState extends State<MyApp> {
             isPassword: true,
             isConnection: true,
         field: Field.password,),
-        '/signup': (context) => const ConnectionChainCustom(
+        '/signup/lastname': (context) => const ConnectionChainCustom(
             title: "Nom", hintText: "Dupont", nextRoute: "/signup/firstname", field: Field.lastname,),
         '/signup/firstname': (context) => const ConnectionChainCustom(
-            title: "Prénom", hintText: "Louis", nextRoute: "/signup/mail", field: Field.firstname,),
+            title: "Prénom", hintText: "Louis", nextRoute: "/signup/password", field: Field.firstname,),
         '/signup/mail': (context) => const ConnectionChainCustom(
             title: "Adresse mail",
             hintText: "louis.dupont@gmail.com",
-            nextRoute: "/signup/password",
+            nextRoute: "/signup/lastname",
             type: TextInputType.emailAddress,
         field: Field.mail,),
         '/signup/password': (context) => const ConnectionChainCustom(

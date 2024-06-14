@@ -23,4 +23,16 @@ class UserServiceStub extends BaseStub implements UserService {
     // TODO: implement login
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> verifyToken(String token) {
+    // TODO: implement verifyToken
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isUserExist(String email) {
+    // TODO: implement verifyToken
+    throw UnimplementedError();
+  }
 }

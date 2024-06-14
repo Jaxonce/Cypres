@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
               BigButton(
                 text: 'Créer son compte',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/signup');
+                  Navigator.pushNamed(context, '/signup/mail');
                 },
               ),
               SizedBox(height: paddingValue / 4.5),

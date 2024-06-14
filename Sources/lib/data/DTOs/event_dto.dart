@@ -1,8 +1,6 @@
 import 'package:cypres/data/DTOs/user_dto.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../model/event_model.dart';
-import '../../model/user_model.dart';
 
 class EventDTO {
   String id;

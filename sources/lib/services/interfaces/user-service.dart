@@ -8,4 +8,8 @@ abstract class UserService {
   Future<UserDTO> register(UserDTO userDTO);
 
   Future<String> login(String email, String password);
+
+  Future<bool> verifyToken(String token);
+
+  Future<bool> isUserExist(String email);
 }

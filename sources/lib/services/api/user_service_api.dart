@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cypres/data/DTOs/user_dto.dart';
+import 'package:cypres/utils/local_storage_service.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +11,9 @@ class UserServiceApi implements UserService {
   @override
   Future<UserDTO> connect(String email) async {
     final response =
-        await http.get(Uri.parse('http://${dotenv.env['HOST']}/User/$email'));
+        await http.get(Uri.parse('http://${dotenv.env['HOST']}/User/$email'), headers: {
+          'Authorization': 'Bearer ${getSavedToken()}'
+        });
     if (response.statusCode == 200) {
       return UserDTO.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>);
@@ -51,6 +54,28 @@ class UserServiceApi implements UserService {
       return response.body;
     } else {
       throw Exception('Failed to login');
+    }
+  }
+
+  @override
+  Future<bool> verifyToken(String token) async{
+    final response =
+        await http.get(Uri.parse('http://${dotenv.env['HOST']}/User/verifyToken?token=$token'));
+    if (response.statusCode == 200) {
+      return Future(() => true);
+    } else {
+      return Future(() => false);
+    }
+  }
+
+  @override
+  Future<bool> isUserExist(String email) async {
+    final response =
+        await http.get(Uri.parse('http://${dotenv.env['HOST']}/User/exists/$email'));
+    if (response.statusCode == 200) {
+      return Future(() => true);
+    } else {
+      return Future(() => false);
     }
   }
 }
