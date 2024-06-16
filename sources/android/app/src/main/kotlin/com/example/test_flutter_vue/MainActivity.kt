@@ -1,6 +1,6 @@
-package com.example.test_flutter_vue
+package app.cypres
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity() {
+class MainActivity : FlutterActivity() {
 }

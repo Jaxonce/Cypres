@@ -4,16 +4,17 @@ import '../data/DTOs/user_dto.dart';
 
 class UserModel extends MemberModel {
   static UserModel? _instance;
-  final String mailAddress;
+  String mailAddress;
+  String password;
 
   UserModel._internal(
-      this.mailAddress, id, firstname, lastname, profilePictureBase64)
+      this.mailAddress, id, firstname, lastname, profilePictureBase64, this.password)
       : super(id, firstname, lastname, profilePictureBase64);
 
   factory UserModel(String mailAddress, String id, String firstname,
-      String lastname, String? profilePictureBase64) {
+      String lastname, String? profilePictureBase64, String password) {
     _instance ??= UserModel._internal(
-        mailAddress, id, firstname, lastname, profilePictureBase64);
+        mailAddress, id, firstname, lastname, profilePictureBase64, password);
     return _instance!;
   }
 
@@ -24,5 +25,5 @@ class UserModel extends MemberModel {
   }
 
   factory UserModel.DTOToPOCO(UserDTO DTO) => UserModel(DTO.mailAddress, DTO.id,
-      DTO.firstname, DTO.lastname, DTO.profilePictureBase64);
+      DTO.firstname, DTO.lastname, DTO.profilePictureBase64, DTO.password);
 }

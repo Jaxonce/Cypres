@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:cypres/data/DTOs/message_dto.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 import '../../data/DTOs/conversation_dto.dart';
+import '../../utils/local_storage_service.dart';
 import '../interfaces/conversation_service.dart';
 
 class ConversationServiceAPI implements ConversationService {
@@ -16,7 +18,9 @@ class ConversationServiceAPI implements ConversationService {
   @override
   Future<ConversationDTO> getConversation(String contactId) async {
     final response = await http
-        .get(Uri.parse('http://10.0.2.2:5047/Message/conversation/$contactId'));
+        .get(Uri.parse('${dotenv.env['HOST']}/Message/conversation/$contactId'), headers: {
+            'Authorization': 'Bearer ${getSavedToken()}'
+    });
 
     if (response.statusCode == 200) {
       return _parseConversation(response.body);
@@ -28,7 +32,9 @@ class ConversationServiceAPI implements ConversationService {
   @override
   Future<MessageDTO> getLastMessage(String contactId) async {
     final response = await http.get(Uri.parse(
-        'http://10.0.2.2:5047/messages/conversation/$contactId/last'));
+        '${dotenv.env['HOST']}/messages/conversation/$contactId/last'), headers: {
+      'Authorization': 'Bearer ${getSavedToken()}'
+    });
 
     if (response.statusCode == 200) {
       return _parseMessage(response.body);

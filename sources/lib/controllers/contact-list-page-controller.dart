@@ -16,15 +16,17 @@ class ContactListPageController {
   final ConversationService _conversationService =
       _getIt.get<ConversationService>();
 
-  Future<UserModel> connectUser() async =>
-      UserModel.DTOToPOCO(await _userService.connect("test@gmail.com"));
+  // Future<UserModel> connectUser() async =>
+  //     UserModel.DTOToPOCO(await _userService.connect("test@gmail.com"));
+
+  Future<UserModel?> getUserConnected() async => await UserModel.getInstance();
 
   Future<MessageModel> getLastMessage(String contactId) async =>
       MessageModel.DTOToPOCO(
           await _conversationService.getLastMessage(contactId));
 
   Future<List<ContactModel>> getContacts() async {
-    await connectUser();
+    UserModel? user = await getUserConnected();
     List<ContactModel> contactPOCOs = [];
     List<ContactDTO> contactDTOs = await _contactService.getContacts("");
     for (var element in contactDTOs) {

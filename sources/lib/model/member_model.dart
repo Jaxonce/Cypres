@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 abstract class MemberModel {
-  final String id;
-  final String firstname;
-  final String lastname;
+  String id;
+  String firstname;
+  String lastname;
   Uint8List? profilePictureBytes;
 
   MemberModel(

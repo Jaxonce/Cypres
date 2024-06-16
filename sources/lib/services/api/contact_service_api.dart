@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:cypres/data/DTOs/contact_dto.dart';
 import 'package:cypres/model/user_model.dart';
 import 'package:cypres/services/interfaces/contact_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+
+import '../../utils/local_storage_service.dart';
 
 class ContactServiceApi implements ContactService {
   List<ContactDTO> _parseContacts(String responseBody) {
@@ -20,7 +23,9 @@ class ContactServiceApi implements ContactService {
     if (mailAddress == null) throw Exception('Failed to load contacts');
 
     final response = await http
-        .get(Uri.parse('http://10.0.2.2:5047/User/$mailAddress/contacts'));
+        .get(Uri.parse('${dotenv.env['HOST']}/User/$mailAddress/contacts'), headers: {
+          'Authorization': 'Bearer ${await getSavedToken()}'
+      });
 
     if (response.statusCode == 200) {
       return _parseContacts(response.body);

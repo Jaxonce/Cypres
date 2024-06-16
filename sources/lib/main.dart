@@ -1,28 +1,53 @@
-import 'package:cypres/json/chat-json.dart';
+import 'package:cypres/controllers/authentication-controller.dart';
 import 'package:cypres/pages/contact-list-page.dart';
+import 'package:cypres/pages/edit-event-page.dart';
+import 'package:cypres/pages/event-list-page.dart';
 import 'package:cypres/pages/home-page.dart';
 import 'package:cypres/pages/message-page.dart';
+import 'package:cypres/utils/local_storage_service.dart';
 import 'package:cypres/widget/connection/connection-chain-custom.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 
 import 'dependency_injection.dart' as di;
 
-final GetIt _getIt = GetIt.instance;
-
-void main() {
+void main() async {
   di.init();
-  runApp(const MyApp());
+  await dotenv.load(fileName: "assets/.env");
+  runApp(MyApp());
 }
 
+final GetIt _getIt = GetIt.instance;
+
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  final AuthenticationController controller =
+  _getIt.get<AuthenticationController>();
+  MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+
+  var token = getSavedToken();
+  var initialRoute = '/';
+
+  void checkToken() async {
+    //TODO verif userConnected value
+    var token = await getSavedToken();
+    if (token != null) {
+      widget.controller.verifyToken(token).then((value) {
+        if (value) {
+          setState(() {
+            initialRoute = '/contact';
+          });
+        }
+      });
+    }
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -32,40 +57,46 @@ class _MyAppState extends State<MyApp> {
         brightness: Brightness.dark,
         barBackgroundColor: CupertinoColors.darkBackgroundGray,
       ),
-      initialRoute: '/contact',
+      initialRoute: initialRoute,
       routes: {
         '/': (context) => const HomePage(),
         '/connection': (context) => const ConnectionChainCustom(
             title: "Adresse mail",
             hintText: "louis.dupont@gmail.com",
             nextRoute: "/connection/password",
-            type: TextInputType.emailAddress),
+            type: TextInputType.emailAddress,
+            isConnection: true,
+        field: Field.mail,),
         '/connection/password': (context) => const ConnectionChainCustom(
             title: "Mot de passe",
             hintText: "••••••••",
-            nextRoute: "/",
+            nextRoute: "/contact",
             buttonText: "Se Connecter",
-            isPassword: true),
-        '/signup': (context) => const ConnectionChainCustom(
-            title: "Nom", hintText: "Dupont", nextRoute: "/signup/firstname"),
+            isPassword: true,
+            isConnection: true,
+        field: Field.password,),
+        '/signup/lastname': (context) => const ConnectionChainCustom(
+            title: "Nom", hintText: "Dupont", nextRoute: "/signup/firstname", field: Field.lastname,),
         '/signup/firstname': (context) => const ConnectionChainCustom(
-            title: "Prénom", hintText: "Louis", nextRoute: "/signup/mail"),
+            title: "Prénom", hintText: "Louis", nextRoute: "/signup/password", field: Field.firstname,),
         '/signup/mail': (context) => const ConnectionChainCustom(
             title: "Adresse mail",
             hintText: "louis.dupont@gmail.com",
-            nextRoute: "/signup/password",
-            type: TextInputType.emailAddress),
+            nextRoute: "/signup/lastname",
+            type: TextInputType.emailAddress,
+        field: Field.mail,),
         '/signup/password': (context) => const ConnectionChainCustom(
             title: "Mot de passe",
             hintText: "••••••••",
-            nextRoute: "/message",
+            nextRoute: "/contact",
             buttonText: "Terminer",
-            isPassword: true),
-        '/message': (context) => MessagePage(
-              name: chatData[1]['name'],
-              image: chatData[3]['img'],
-            ),
-        '/contact': (context) => ContactPage()
+            isPassword: true,
+        field: Field.password,),
+        '/message': (context) => MessagePage(),
+        '/contact': (context) => ContactPage(),
+        '/event': (context) => EventPage(),
+        '/event-add': (context) => EditEventPage(),
+        '/event/edit': (context) => EditEventPage()
         //'/test':(context) => ChatScreen(username: "Maxence")
       },
     );
