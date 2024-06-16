@@ -35,6 +35,7 @@ class _MyAppState extends State<MyApp> {
   var initialRoute = '/';
 
   void checkToken() async {
+    //TODO verif userConnected value
     var token = await getSavedToken();
     if (token != null) {
       widget.controller.verifyToken(token).then((value) {
@@ -69,7 +70,7 @@ class _MyAppState extends State<MyApp> {
         '/connection/password': (context) => const ConnectionChainCustom(
             title: "Mot de passe",
             hintText: "••••••••",
-            nextRoute: "/message",
+            nextRoute: "/contact",
             buttonText: "Se Connecter",
             isPassword: true,
             isConnection: true,
@@ -87,7 +88,7 @@ class _MyAppState extends State<MyApp> {
         '/signup/password': (context) => const ConnectionChainCustom(
             title: "Mot de passe",
             hintText: "••••••••",
-            nextRoute: "/message",
+            nextRoute: "/contact",
             buttonText: "Terminer",
             isPassword: true,
         field: Field.password,),

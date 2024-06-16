@@ -18,7 +18,7 @@ class ConversationServiceAPI implements ConversationService {
   @override
   Future<ConversationDTO> getConversation(String contactId) async {
     final response = await http
-        .get(Uri.parse('http://${dotenv.env['HOST']}/Message/conversation/$contactId'), headers: {
+        .get(Uri.parse('${dotenv.env['HOST']}/Message/conversation/$contactId'), headers: {
             'Authorization': 'Bearer ${getSavedToken()}'
     });
 
@@ -32,7 +32,7 @@ class ConversationServiceAPI implements ConversationService {
   @override
   Future<MessageDTO> getLastMessage(String contactId) async {
     final response = await http.get(Uri.parse(
-        'http://${dotenv.env['HOST']}/messages/conversation/$contactId/last'), headers: {
+        '${dotenv.env['HOST']}/messages/conversation/$contactId/last'), headers: {
       'Authorization': 'Bearer ${getSavedToken()}'
     });
 

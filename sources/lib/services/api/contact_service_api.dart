@@ -23,8 +23,8 @@ class ContactServiceApi implements ContactService {
     if (mailAddress == null) throw Exception('Failed to load contacts');
 
     final response = await http
-        .get(Uri.parse('http://${dotenv.env['HOST']}/User/$mailAddress/contacts'), headers: {
-          'Authorization': 'Bearer ${getSavedToken()}'
+        .get(Uri.parse('${dotenv.env['HOST']}/User/$mailAddress/contacts'), headers: {
+          'Authorization': 'Bearer ${await getSavedToken()}'
       });
 
     if (response.statusCode == 200) {

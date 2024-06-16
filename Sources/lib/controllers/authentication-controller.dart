@@ -9,11 +9,23 @@ final GetIt _getIt = GetIt.instance;
 class AuthenticationController {
   final UserService _userService = _getIt.get<UserService>();
 
-  Future<UserModel> register(UserDTO userDTO) async {
-    return UserModel.DTOToPOCO(await _userService.register(userDTO));
+  Future<UserDTO> register(UserDTO userDTO) async {
+    return await _userService.register(userDTO);
   }
 
   Future<String> login(String email, String password) async {
     return await _userService.login(email,password);
+  }
+
+  Future<bool> verifyToken(String token) async {
+    return await _userService.verifyToken(token);
+  }
+
+  Future<bool> isUserExist(String email) async {
+    return await _userService.isUserExist(email);
+  }
+
+  Future<UserDTO> connect(String email) async {
+    return await _userService.connect(email);
   }
 }

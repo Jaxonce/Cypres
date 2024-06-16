@@ -35,7 +35,9 @@ class _MessagePageState extends State<MessagePage> {
   @override
   void initState() async{
     super.initState();
-    userConnected = await widget.controller.connectUser();
+    if (widget.controller.getUserConnected() != null) {
+      userConnected = widget.controller.getUserConnected()!;
+    }
   }
 
   @override

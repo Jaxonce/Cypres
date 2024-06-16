@@ -11,8 +11,8 @@ class UserServiceApi implements UserService {
   @override
   Future<UserDTO> connect(String email) async {
     final response =
-        await http.get(Uri.parse('http://${dotenv.env['HOST']}/User/$email'), headers: {
-          'Authorization': 'Bearer ${getSavedToken()}'
+        await http.get(Uri.parse('${dotenv.env['HOST']}/User/$email'), headers: {
+          'Authorization': 'Bearer ${await getSavedToken()}'
         });
     if (response.statusCode == 200) {
       return UserDTO.fromJson(
@@ -32,7 +32,7 @@ class UserServiceApi implements UserService {
     var body = userDTO.toJson(userDTO);
     final response =
         await http.post(
-            Uri.parse('http://${dotenv.env['HOST']}/User/register'),
+            Uri.parse('${dotenv.env['HOST']}/User/register'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
@@ -49,7 +49,7 @@ class UserServiceApi implements UserService {
   @override
   Future<String> login(String email, String password) async {
     final response =
-        await http.post(Uri.parse('http://${dotenv.env['HOST']}/User/login?email=$email&password=$password'));
+        await http.post(Uri.parse('${dotenv.env['HOST']}/User/login?email=$email&password=$password'));
     if (response.statusCode == 200) {
       return response.body;
     } else {
@@ -60,7 +60,7 @@ class UserServiceApi implements UserService {
   @override
   Future<bool> verifyToken(String token) async{
     final response =
-        await http.get(Uri.parse('http://${dotenv.env['HOST']}/User/verifyToken?token=$token'));
+        await http.get(Uri.parse('${dotenv.env['HOST']}/User/verifyToken?token=$token'));
     if (response.statusCode == 200) {
       return Future(() => true);
     } else {
@@ -71,8 +71,8 @@ class UserServiceApi implements UserService {
   @override
   Future<bool> isUserExist(String email) async {
     final response =
-        await http.get(Uri.parse('http://${dotenv.env['HOST']}/User/exists/$email'));
-    if (response.statusCode == 200) {
+        await http.get(Uri.parse('${dotenv.env['HOST']}/User/exists/$email'));
+    if (response.body == 'true') {
       return Future(() => true);
     } else {
       return Future(() => false);

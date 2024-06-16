@@ -10,6 +10,7 @@ class BigButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return ButtonBar(
       alignment: MainAxisAlignment.center,
@@ -21,9 +22,9 @@ class BigButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             foregroundColor: Color(0xff1B3C16),
             backgroundColor: Color(0xffD7E2D6), // Couleur du texte
-            minimumSize: Size(screenWidth, screenWidth/6.2), // Taille du bouton
+            minimumSize: Size(screenHeight, screenWidth/6.2), // Taille du bouton
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30.0),
+              borderRadius: BorderRadius.circular(screenWidth/6.1),
             ),
           ),
           child: Text(
