@@ -12,19 +12,10 @@ def main(ctx):
         pipeline.append(CI_Empty())
         return pipeline
     
-    CI_Pipeline["steps"] = [Build_App(), Code_Analysis()]
+    CI_Pipeline["steps"] = [Code_Analysis()]
     pipeline.append(CI_Pipeline)
     return pipeline
 
-def Build_App():
-    return {
-        "name": "app-build",
-        "image": "ghcr.io/cirruslabs/flutter:3.19.2",
-        "commands": [
-            "cd ./sources/",
-            "flutter build apk"
-        ]
-    }
 
 def Code_Analysis():
     return {
