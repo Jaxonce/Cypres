@@ -10,8 +10,7 @@ final GetIt _getIt = GetIt.instance;
 class ContactItem extends StatefulWidget {
   final ContactModel contact;
 
-  final ContactListPageController controller =
-      _getIt.get<ContactListPageController>();
+  final ContactListPageController controller = ContactListPageController();
 
   ContactItem({super.key, required this.contact});
 
