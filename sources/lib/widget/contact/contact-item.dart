@@ -25,7 +25,9 @@ class _ContactItemState extends State<ContactItem> {
   Future<void> _loadLastMessage() async {
     MessageModel tmp =
         await widget.controller.getLastMessage(widget.contact.id);
-
+    if (tmp.content.isEmpty) {
+      tmp.content = "Image";
+    }
     setState(() {
       lastMessage = tmp;
     });

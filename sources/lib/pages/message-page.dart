@@ -29,15 +29,13 @@ class MessagePage extends StatefulWidget {
 class _MessagePageState extends State<MessagePage> {
   late Image profileImage;
   late ConversationModel currentConversation;
+  late ContactModel contactConversation;
 
-  late UserModel userConnected;
+  late UserModel? userConnected;
 
   @override
-  void initState() async{
+  void initState() {
     super.initState();
-    if (widget.controller.getUserConnected() != null) {
-      userConnected = widget.controller.getUserConnected()!;
-    }
   }
 
   @override
@@ -48,10 +46,13 @@ class _MessagePageState extends State<MessagePage> {
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
 
+    userConnected = UserModel.getInstance();
     //peut génrérer une erreur si la conv est null
-    currentConversation =
-        ModalRoute.of(context)!.settings.arguments as ConversationModel;
+    contactConversation =
+        ModalRoute.of(context)!.settings.arguments as ContactModel;
 
+    //get conversation
+    //TODO
     return CupertinoPageScaffold(
         navigationBar: getTabBar(paddingValue, currentConversation.contact),
         child: ColorfulSafeArea(
@@ -89,8 +90,8 @@ class _MessagePageState extends State<MessagePage> {
                           child: getBody(currentConversation.messages),
                         ),
                         MessageBottomBar(conversationMembers: [
-                          currentConversation.contact,
-                          userConnected
+                          contactConversation,
+                          userConnected!
                         ])
                       ],
                     )),

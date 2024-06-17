@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cypres/utils/hash_password_utils.dart';
+import 'package:cypres/utils/image_converter_utils.dart';
 import 'package:cypres/utils/local_storage_service.dart';
 import 'package:cypres/widget/connection/custom-textfield.dart';
 import 'package:email_validator/email_validator.dart';
@@ -143,7 +144,7 @@ class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
     if (userBuilder != null) {
       user = userBuilder as UserModel;
     } else {
-      user = UserModel("","","","","","");
+      user = UserModel("","","","",null,"");
     }
     switch (widget.field) {
       case Field.lastname :

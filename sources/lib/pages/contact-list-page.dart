@@ -47,7 +47,7 @@ class _ContactPageState extends State<ContactPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CupertinoButton(
-                    onPressed: addContact(),
+                    onPressed: () => Navigator.pushNamed(context, "/contact/add"),
                     child: const Icon(
                       CupertinoIcons.add,
                       color: CupertinoColors.activeBlue,

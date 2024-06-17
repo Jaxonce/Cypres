@@ -1,4 +1,5 @@
 import 'package:cypres/controllers/authentication-controller.dart';
+import 'package:cypres/pages/add-conversation-page.dart';
 import 'package:cypres/pages/contact-list-page.dart';
 import 'package:cypres/pages/edit-event-page.dart';
 import 'package:cypres/pages/event-list-page.dart';
@@ -94,6 +95,7 @@ class _MyAppState extends State<MyApp> {
         field: Field.password,),
         '/message': (context) => MessagePage(),
         '/contact': (context) => ContactPage(),
+        '/contact/add': (context) => AddConversationPage(),
         '/event': (context) => EventPage(),
         '/event-add': (context) => EditEventPage(),
         '/event/edit': (context) => EditEventPage()
