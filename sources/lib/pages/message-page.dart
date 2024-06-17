@@ -18,7 +18,7 @@ import '../widget/message/message-bottom-bar-stateful.dart';
 final GetIt _getIt = GetIt.instance;
 
 class MessagePage extends StatefulWidget {
-  final MessagePageController controller = _getIt.get<MessagePageController>();
+  final MessagePageController controller = MessagePageController();
 
   MessagePage({super.key});
 

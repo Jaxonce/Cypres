@@ -11,15 +11,31 @@ import '../services/interfaces/conversation_service.dart';
 final GetIt _getIt = GetIt.instance;
 
 class ContactListPageController {
+  static ContactListPageController? _instance;
+
   final UserService _userService = _getIt.get<UserService>();
   final ContactService _contactService = _getIt.get<ContactService>();
   final ConversationService _conversationService =
       _getIt.get<ConversationService>();
 
+  ContactListPageController._internal();
+
+  factory ContactListPageController() {
+    _instance ??= ContactListPageController._internal();
+    return _instance!;
+  }
+
+  static ContactListPageController? getInstance() => _instance;
+
+  static void resetInstance() {
+    _instance = null;
+  }
+
   // Future<UserModel> connectUser() async =>
   //     UserModel.DTOToPOCO(await _userService.connect("test@gmail.com"));
 
   Future<UserModel?> getUserConnected() async => await UserModel.getInstance();
+
   Future<UserModel> connectUser() async =>
       UserModel.DTOToPOCO(await _userService.connect("vincent@gmail.com"));
 
