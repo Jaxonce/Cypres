@@ -27,6 +27,7 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
+  late Image profileImage;
   ConversationModel? currentConversation;
   ContactModel? contactConversation;
   UserModel? userConnected;
@@ -99,7 +100,7 @@ class _MessagePageState extends State<MessagePage> {
                           child: getBody(currentConversation?.messages ?? []),
                         ),
                         MessageBottomBar(conversationMembers: [
-                          contactConversation,
+                          contactConversation!,
                           userConnected!
                         ])
                       ],
@@ -112,9 +113,9 @@ class _MessagePageState extends State<MessagePage> {
 
   ObstructingPreferredSizeWidget? getTabBar(
       double paddingValue, ContactModel? contact) {
-    if (contact.profilePictureBytes != null) {
+    if (contact?.profilePictureBytes != null) {
       profileImage = ImageConverterUtils.imageFromBase64String(
-          contact.profilePictureBytes.toString());
+          contact!.profilePictureBytes.toString());
     }
     return CupertinoNavigationBar(
       middle: Row(

@@ -15,7 +15,7 @@ import 'dependency_injection.dart' as di;
 
 final GetIt _getIt = GetIt.instance;
 
-void main() {
+Future<void> main() async {
   di.init();
   await dotenv.load(fileName: "assets/.env");
   runApp(MyApp());
