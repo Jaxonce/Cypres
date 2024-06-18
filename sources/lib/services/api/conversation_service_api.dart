@@ -21,19 +21,6 @@ class ConversationServiceAPI implements ConversationService {
   }
 
   @override
-  Future<ConversationDTO> getConversation(String contactId) async {
-    final response = await http.get(
-        Uri.parse('${dotenv.env['HOST']}/Message/conversation/$contactId'),
-        headers: {'Authorization': 'Bearer ${await getSavedToken()}'});
-
-    if (response.statusCode == 200) {
-      return _parseConversation(response.body);
-    } else {
-      throw Exception('Failed to load contacts');
-    }
-  }
-
-  @override
   Future<List<MessageDTO>> getConversationMessages(String convId) async {
     final response = await http.get(
         Uri.parse('${dotenv.env['HOST']}/Message/conversation/$convId'),

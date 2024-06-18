@@ -1,4 +1,3 @@
-import 'package:cypres/data/DTOs/conversation_dto.dart';
 import 'package:cypres/services/interfaces/message_service.dart';
 
 import '../../data/DTOs/contact_dto.dart';
@@ -7,15 +6,8 @@ import 'base_stub.dart';
 
 class MessageServiceStub extends BaseStub implements MessageService {
   @override
-  void sendMessage(MessageDTO m) {
-    stub().messages.add(m);
-  }
-
-  @override
-  Future<List<MessageDTO>> getMessages(String c) async => await stub()
-      .messages
-      .where((m) => m.senderId == c)
-      .toList();
+  Future<List<MessageDTO>> getMessages(String c) async =>
+      await stub().messages.where((m) => m.senderId == c).toList();
 
   @override
   MessageDTO getLastMessage(ContactDTO c) => stub()
@@ -25,4 +17,10 @@ class MessageServiceStub extends BaseStub implements MessageService {
               b.date.difference(DateTime.now()).abs()
           ? a
           : b);
+
+  @override
+  Future<void> sendMessage(MessageDTO m, String convId) {
+    // TODO: implement sendMessage
+    throw UnimplementedError();
+  }
 }

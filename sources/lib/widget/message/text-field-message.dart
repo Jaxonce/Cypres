@@ -1,16 +1,22 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:cypres/controllers/message-page-controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MessageTextField extends StatefulWidget {
+  final String contactId;
+
+  MessageTextField(this.contactId);
+
   @override
   _MessageTextFieldState createState() => _MessageTextFieldState();
 }
 
 class _MessageTextFieldState extends State<MessageTextField> {
-  final TextEditingController _controller = TextEditingController();
+  final MessagePageController controller = MessagePageController();
+  final TextEditingController _textController = TextEditingController();
   bool _hasText = false;
   Uint8List? bytes;
   File? file;
@@ -18,26 +24,25 @@ class _MessageTextFieldState extends State<MessageTextField> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_checkText);
+    _textController.addListener(_checkText);
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_checkText);
-    _controller.dispose();
+    _textController.removeListener(_checkText);
+    _textController.dispose();
     super.dispose();
   }
 
   void _checkText() {
     setState(() {
-      _hasText = _controller.text.isNotEmpty;
+      _hasText = _textController.text.isNotEmpty;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    print(screenWidth);
 
     return SizedBox(
         //Permet d'aligner les icons en bas quand le textfield s'agrandit
@@ -66,18 +71,20 @@ class _MessageTextFieldState extends State<MessageTextField> {
         suffix: Align(
           alignment: Alignment.bottomRight,
           child: CupertinoButton(
-            onPressed: sendMessage(),
+            onPressed: () => {
+              controller.sendMessage(_textController.text, widget.contactId)
+            },
             padding: EdgeInsets.zero,
             child: Icon(
-                _controller.text.isNotEmpty
+                _textController.text.isNotEmpty
                     ? CupertinoIcons.paperplane_fill
                     : CupertinoIcons.paperplane,
-                color: _controller.text.isNotEmpty
+                color: _textController.text.isNotEmpty
                     ? const Color(0xffD0FFE0)
                     : CupertinoColors.systemGrey),
           ),
         ),
-        controller: _controller,
+        controller: _textController,
         suffixMode: OverlayVisibilityMode.always,
         minLines: 1,
         maxLines: 6,
@@ -97,6 +104,4 @@ class _MessageTextFieldState extends State<MessageTextField> {
       ),
     ));
   }
-
-  sendMessage() {}
 }

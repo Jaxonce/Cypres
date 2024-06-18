@@ -55,7 +55,9 @@ class _MessageBottomBarState extends State<MessageBottomBar> {
                       ),
                     ],
                   ),
-                  Expanded(child: MessageTextField()),
+                  Expanded(
+                      child:
+                          MessageTextField(widget.conversationMembers[0].id)),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

@@ -25,6 +25,14 @@ class MessagePage extends StatefulWidget {
 class _MessagePageState extends State<MessagePage> {
   late Image profileImage;
   ConversationModel? conversation;
+  final userConnected = UserModel.getInstance()!;
+  ContactModel? contact;
+
+  setContact(ContactModel c) {
+    if (contact != null) return;
+    contact = c;
+    _loadConversation(contact!);
+  }
 
   @override
   void initState() {
@@ -42,17 +50,14 @@ class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    final contact = ModalRoute.of(context)!.settings.arguments as ContactModel;
-    final userConnected = UserModel.getInstance()!;
-
-    _loadConversation(contact);
+    setContact(ModalRoute.of(context)!.settings.arguments as ContactModel);
 
     // Calculer le pourcentage pour le padding
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
 
     return CupertinoPageScaffold(
-        navigationBar: getTabBar(paddingValue, contact),
+        navigationBar: getTabBar(paddingValue, contact!),
         child: ColorfulSafeArea(
             color: const Color(0xff181818),
             top: false,
@@ -85,11 +90,11 @@ class _MessagePageState extends State<MessagePage> {
                         CupertinoPageScaffold(
                           backgroundColor: Colors.transparent,
                           resizeToAvoidBottomInset: true,
-                          child:
-                              getBody(conversation?.messages ?? [], contact.id),
+                          child: getBody(
+                              conversation?.messages ?? [], contact!.id),
                         ),
                         MessageBottomBar(
-                            conversationMembers: [contact, userConnected])
+                            conversationMembers: [contact!, userConnected])
                       ],
                     )),
               ]),

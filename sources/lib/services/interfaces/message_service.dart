@@ -1,5 +1,5 @@
 import '../../data/DTOs/message_dto.dart';
 
 abstract class MessageService {
-  void sendMessage(MessageDTO m);
+  Future<void> sendMessage(MessageDTO m, String convId);
 }

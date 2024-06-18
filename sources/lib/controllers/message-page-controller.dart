@@ -1,3 +1,4 @@
+import 'package:cypres/data/DTOs/message_dto.dart';
 import 'package:cypres/model/contact_model.dart';
 import 'package:cypres/model/conversation_model.dart';
 import 'package:cypres/model/message_model.dart';
@@ -45,5 +46,13 @@ class MessagePageController {
       pocos.add(MessageModel.DTOToPOCO(element));
     }
     return ConversationModel(contact, pocos);
+  }
+
+  Future<void> sendMessage(String content, String contactId) async {
+    var conversationId = await _conversationService.getConversationId(
+        contactId, UserModel.getInstance()!.id);
+    _messageService.sendMessage(
+        MessageDTO(content, DateTime.now(), UserModel.getInstance()!.id),
+        conversationId);
   }
 }
