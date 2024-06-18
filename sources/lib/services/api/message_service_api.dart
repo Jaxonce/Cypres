@@ -1,4 +1,3 @@
-import 'package:cypres/data/DTOs/conversation_dto.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../data/DTOs/contact_dto.dart';
@@ -14,9 +13,9 @@ class MessageServiceApi implements MessageService {
   }
 
   @override
-  Future<List<MessageDTO>> getMessages(String convId) async{
+  Future<List<MessageDTO>> getMessages(String c) async{
     final response = await http
-        .get(Uri.parse('${dotenv.env['HOST']}/Message/conversation/$convId'), headers: {
+        .get(Uri.parse('${dotenv.env['HOST']}/Message/conversation/$c'), headers: {
           'Authorization': 'Bearer ${await getSavedToken()}'
       });
 
