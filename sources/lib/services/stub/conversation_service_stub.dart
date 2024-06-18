@@ -5,10 +5,10 @@ import '../../data/DTOs/conversation_dto.dart';
 import '../interfaces/conversation_service.dart';
 
 class ConversationServiceStub extends BaseStub implements ConversationService {
-  @override
-  Future<ConversationDTO> getConversation(String contactId) async => stub()
-      .conversations
-      .firstWhere((element) => element.contactId == contactId);
+  // @override
+  // Future<ConversationDTO> getConversation(String conversationId) async => stub()
+  //     .conversations
+  //     .firstWhere((element) => element.contactId == conversationId);
 
   @override
   Future<MessageDTO> getLastMessage(String contactId) {

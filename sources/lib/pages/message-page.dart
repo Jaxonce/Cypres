@@ -31,21 +31,19 @@ class _MessagePageState extends State<MessagePage> {
   ConversationModel? currentConversation;
   ContactModel? contactConversation;
   UserModel? userConnected;
+  //
+  // Future<void> _loadConversation(ContactModel contact) async {
+  //   ConversationModel? tmp = await widget.controller.getMessages(contact);
+  //   setState(() {
+  //     currentConversation = tmp;
+  //   });
+  // }
 
-  Future<void> _loadConversation(ContactModel contact) async {
-    ConversationModel? tmp = await widget.controller.getConversation(contact);
-    setState(() {
-      currentConversation = tmp;
-    });
-  }
+  List<MessageModel?> messagesList = [];
 
   @override
   void initState() {
     super.initState();
-
-    ContactModel contact =
-        ModalRoute.of(context)?.settings.arguments as ContactModel;
-    _loadConversation(contact);
   }
 
   @override
@@ -60,11 +58,14 @@ class _MessagePageState extends State<MessagePage> {
     //peut génrérer une erreur si la conv est null
     contactConversation =
         ModalRoute.of(context)!.settings.arguments as ContactModel;
-
+    ContactModel contact =
+    ModalRoute.of(context)?.settings.arguments as ContactModel;
+    //_loadConversation(contact);
     //get conversation
+    _getMessageList(contactConversation!.id);
     //TODO
     return CupertinoPageScaffold(
-        navigationBar: getTabBar(paddingValue, currentConversation?.contact),
+        navigationBar: getTabBar(paddingValue, contactConversation!),
         child: ColorfulSafeArea(
             color: const Color(0xff181818),
             top: false,
@@ -97,7 +98,7 @@ class _MessagePageState extends State<MessagePage> {
                         CupertinoPageScaffold(
                           backgroundColor: Colors.transparent,
                           resizeToAvoidBottomInset: true,
-                          child: getBody(currentConversation?.messages ?? []),
+                          child: getBody(messagesList),
                         ),
                         MessageBottomBar(conversationMembers: [
                           contactConversation!,
@@ -112,10 +113,9 @@ class _MessagePageState extends State<MessagePage> {
   addFile() {}
 
   ObstructingPreferredSizeWidget? getTabBar(
-      double paddingValue, ContactModel? contact) {
-    if (contact?.profilePictureBytes != null) {
-      profileImage = ImageConverterUtils.imageFromBase64String(
-          contact!.profilePictureBytes.toString());
+      double paddingValue, ContactModel contact) {
+    if (contact.profilePictureBytes != null) {
+      profileImage = Image.memory(contact.profilePictureBytes!);
     }
     return CupertinoNavigationBar(
       middle: Row(
@@ -123,9 +123,7 @@ class _MessagePageState extends State<MessagePage> {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundImage: contact?.profilePictureBytes != null
-                ? MemoryImage(contact!.profilePictureBytes!)
-                : null,
+            backgroundImage: profileImage.image,
           ),
           const SizedBox(width: 8),
           Padding(
@@ -162,14 +160,22 @@ class _MessagePageState extends State<MessagePage> {
     );
   }
 
-  Widget getBody(List<MessageModel> messagesList) {
+  Widget getBody(List<MessageModel?> messagesList) {
+    if (messagesList.isEmpty || messagesList == null) {
+      return const Center(
+        child: Text("No messages"),
+      );
+    } else {
+      messagesList as List<MessageModel>;
+    }
     return ListView(
-      dragStartBehavior: DragStartBehavior.down,
+      dragStartBehavior: DragStartBehavior.start,
+      reverse: true,
       padding: const EdgeInsets.only(top: 20, bottom: 80),
       children: List.generate(messagesList.length, (index) {
         return CustomChatBubble(
             isMe: messagesList[index].senderId !=
-                currentConversation?.contact.id,
+                contactConversation!.id,
             message: messagesList[index].content,
             time: messagesList[index].date.hour.toString(),
             isLast: false);
@@ -181,4 +187,11 @@ class _MessagePageState extends State<MessagePage> {
   deleteConversation() {}
 
   getInformation() {}
+
+  Future<void> _getMessageList(String contactId) async {
+    var tmp = await widget.controller.getMessages(contactId);
+    setState(() {
+      messagesList = tmp;
+    });
+  }
 }

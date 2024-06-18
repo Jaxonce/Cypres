@@ -1,5 +1,6 @@
 import 'package:cypres/services/api/contact_service_api.dart';
 import 'package:cypres/services/api/conversation_service_api.dart';
+import 'package:cypres/services/api/message_service_api.dart';
 import 'package:cypres/services/api/user_service_api.dart';
 import 'package:cypres/services/interfaces/contact_service.dart';
 import 'package:cypres/services/interfaces/conversation_service.dart';
@@ -22,7 +23,7 @@ void init() {
 
 void _initServices() {
   _getIt.registerSingleton<ConversationService>(ConversationServiceAPI());
-  _getIt.registerSingleton<MessageService>(MessageServiceStub());
+  _getIt.registerSingleton<MessageService>(MessageServiceApi());
   _getIt.registerSingleton<EventService>(EventServiceStub());
   _getIt.registerSingleton<ContactService>(ContactServiceApi());
   _getIt.registerSingleton<UserService>(UserServiceApi());

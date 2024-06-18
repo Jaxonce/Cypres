@@ -30,13 +30,9 @@ class _EventPageState extends State<EventPage> {
   late List<EventModel> events;
 
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    userModel = await widget.controller.connectUser();
-    base64Image = userModel.profilePictureBytes.toString();
-    if (base64Image != null) {
-      profileImage = imageFromBase64String(base64Image!);
-    }
+    _loadUser();
   }
 
   @override
@@ -151,5 +147,13 @@ class _EventPageState extends State<EventPage> {
                     setState(() {});
                   }));
         });
+  }
+
+  void _loadUser() async {
+    userModel = await widget.controller.connectUser();
+    base64Image = userModel.profilePictureBytes.toString();
+    if (base64Image != null) {
+      profileImage = imageFromBase64String(base64Image!);
+    }
   }
 }

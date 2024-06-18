@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../data/DTOs/contact_dto.dart';
@@ -20,7 +22,7 @@ class MessageServiceApi implements MessageService {
       });
 
     if (response.statusCode == 200) {
-      return (response.body as List).map<MessageDTO>((json) => MessageDTO.fromJson(json)).toList();
+      return (jsonDecode(response.body) as List).map<MessageDTO>((json) => MessageDTO.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load messages');
     }

@@ -4,7 +4,7 @@ import 'package:cypres/model/user_model.dart';
 import '../../data/DTOs/conversation_dto.dart';
 
 abstract class ConversationService {
-  Future<ConversationDTO> getConversation(String contactId);
+  //Future<ConversationDTO> getConversation(String conversationId);
 
   Future<MessageDTO> getLastMessage(String contactId);
 

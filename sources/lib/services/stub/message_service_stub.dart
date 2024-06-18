@@ -12,9 +12,9 @@ class MessageServiceStub extends BaseStub implements MessageService {
   }
 
   @override
-  Future<List<MessageDTO>> getMessages(String convId) async => await stub()
+  Future<List<MessageDTO>> getMessages(String c) async => await stub()
       .messages
-      .where((m) => m.senderId == convId)
+      .where((m) => m.senderId == c)
       .toList();
 
   @override
