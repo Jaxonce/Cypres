@@ -1,21 +1,17 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:cypres/controllers/message-page-controller.dart';
 import 'package:cypres/model/contact_model.dart';
-import 'package:cypres/model/conversation_model.dart';
 import 'package:cypres/model/message_model.dart';
 import 'package:cypres/widget/message/bubble-chat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
-import 'package:get_it/get_it.dart';
 import 'package:pull_down_button/pull_down_button.dart';
 
+import '../model/conversation_model.dart';
 import '../model/user_model.dart';
-import '../utils/image_converter_utils.dart';
 import '../widget/message/message-bottom-bar-stateful.dart';
-
-final GetIt _getIt = GetIt.instance;
 
 class MessagePage extends StatefulWidget {
   final MessagePageController controller = MessagePageController();
@@ -28,44 +24,35 @@ class MessagePage extends StatefulWidget {
 
 class _MessagePageState extends State<MessagePage> {
   late Image profileImage;
-  ConversationModel? currentConversation;
-  ContactModel? contactConversation;
-  UserModel? userConnected;
-  //
-  // Future<void> _loadConversation(ContactModel contact) async {
-  //   ConversationModel? tmp = await widget.controller.getMessages(contact);
-  //   setState(() {
-  //     currentConversation = tmp;
-  //   });
-  // }
-
-  List<MessageModel?> messagesList = [];
+  ConversationModel? conversation;
 
   @override
   void initState() {
     super.initState();
   }
 
+  Future<void> _loadConversation(ContactModel contact) async {
+    var tmp = await widget.controller.getConversation(contact);
+
+    setState(() {
+      conversation = tmp;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final contact = ModalRoute.of(context)!.settings.arguments as ContactModel;
+    final userConnected = UserModel.getInstance()!;
+
+    _loadConversation(contact);
 
     // Calculer le pourcentage pour le padding
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
 
-    userConnected = UserModel.getInstance();
-    //peut génrérer une erreur si la conv est null
-    contactConversation =
-        ModalRoute.of(context)!.settings.arguments as ContactModel;
-    ContactModel contact =
-    ModalRoute.of(context)?.settings.arguments as ContactModel;
-    //_loadConversation(contact);
-    //get conversation
-    _getMessageList(contactConversation!.id);
-    //TODO
     return CupertinoPageScaffold(
-        navigationBar: getTabBar(paddingValue, contactConversation!),
+        navigationBar: getTabBar(paddingValue, contact),
         child: ColorfulSafeArea(
             color: const Color(0xff181818),
             top: false,
@@ -98,12 +85,11 @@ class _MessagePageState extends State<MessagePage> {
                         CupertinoPageScaffold(
                           backgroundColor: Colors.transparent,
                           resizeToAvoidBottomInset: true,
-                          child: getBody(messagesList),
+                          child:
+                              getBody(conversation?.messages ?? [], contact.id),
                         ),
-                        MessageBottomBar(conversationMembers: [
-                          contactConversation!,
-                          userConnected!
-                        ])
+                        MessageBottomBar(
+                            conversationMembers: [contact, userConnected])
                       ],
                     )),
               ]),
@@ -128,7 +114,7 @@ class _MessagePageState extends State<MessagePage> {
           const SizedBox(width: 8),
           Padding(
             padding: EdgeInsets.only(right: paddingValue / 2.5),
-            child: Text(contact?.firstname ?? "",
+            child: Text(contact.firstname ?? "",
                 style: const TextStyle(
                     color: Colors.white,
                     fontSize: 17,
@@ -160,8 +146,8 @@ class _MessagePageState extends State<MessagePage> {
     );
   }
 
-  Widget getBody(List<MessageModel?> messagesList) {
-    if (messagesList.isEmpty || messagesList == null) {
+  Widget getBody(List<MessageModel?> messagesList, String contactId) {
+    if (messagesList.isEmpty) {
       return const Center(
         child: Text("No messages"),
       );
@@ -174,8 +160,7 @@ class _MessagePageState extends State<MessagePage> {
       padding: const EdgeInsets.only(top: 20, bottom: 80),
       children: List.generate(messagesList.length, (index) {
         return CustomChatBubble(
-            isMe: messagesList[index].senderId !=
-                contactConversation!.id,
+            isMe: messagesList[index].senderId != contactId,
             message: messagesList[index].content,
             time: messagesList[index].date.hour.toString(),
             isLast: false);
@@ -187,11 +172,4 @@ class _MessagePageState extends State<MessagePage> {
   deleteConversation() {}
 
   getInformation() {}
-
-  Future<void> _getMessageList(String contactId) async {
-    var tmp = await widget.controller.getMessages(contactId);
-    setState(() {
-      messagesList = tmp;
-    });
-  }
 }
