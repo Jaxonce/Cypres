@@ -31,17 +31,15 @@ class ContactListPageController {
     _instance = null;
   }
 
-  // Future<UserModel> connectUser() async =>
-  //     UserModel.DTOToPOCO(await _userService.connect("test@gmail.com"));
-
   Future<UserModel?> getUserConnected() async => await UserModel.getInstance();
 
-  Future<UserModel> connectUser() async =>
-      UserModel.DTOToPOCO(await _userService.connect("vincent@gmail.com"));
-
-  Future<MessageModel> getLastMessage(String contactId) async =>
-      MessageModel.DTOToPOCO(
-          await _conversationService.getLastMessage(contactId));
+  Future<MessageModel?> getLastMessage(String contactId) async {
+    UserModel? user = await getUserConnected();
+    var conversationId =
+        await _conversationService.getConversationId(contactId, user!.id);
+    return MessageModel.DTOToPOCO(
+        await _conversationService.getLastMessage(conversationId));
+  }
 
   Future<List<ContactModel>> getContacts() async {
     UserModel? user = await getUserConnected();

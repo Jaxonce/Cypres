@@ -1,8 +1,10 @@
 import 'package:cypres/model/contact_model.dart';
+import 'package:cypres/model/conversation_model.dart';
+import 'package:cypres/model/message_model.dart';
+import 'package:cypres/services/interfaces/message_service.dart';
 import 'package:cypres/services/interfaces/user-service.dart';
 import 'package:get_it/get_it.dart';
 
-import '../model/conversation_model.dart';
 import '../model/user_model.dart';
 import '../services/interfaces/conversation_service.dart';
 
@@ -14,7 +16,7 @@ class MessagePageController {
   final ConversationService _conversationService =
       _getIt.get<ConversationService>();
   final UserService _userService = _getIt.get<UserService>();
-  final UserModel? _user = UserModel.getInstance();
+  final MessageService _messageService = _getIt.get<MessageService>();
 
   MessagePageController._internal();
 
@@ -30,9 +32,18 @@ class MessagePageController {
   }
 
   Future<ConversationModel?> getConversation(ContactModel contact) async {
-    return ConversationModel.DTOToPOCO(
-        await _conversationService.getConversation(contact.id), contact);
-  }
+    String? userId = UserModel.getInstance()?.id;
+    if (userId == null) return null;
 
-  UserModel? getUserConnected() => _user;
+    var conversationId =
+        await _conversationService.getConversationId(contact.id, userId);
+    var dtos =
+        await _conversationService.getConversationMessages(conversationId);
+
+    List<MessageModel> pocos = [];
+    for (var element in dtos) {
+      pocos.add(MessageModel.DTOToPOCO(element));
+    }
+    return ConversationModel(contact, pocos);
+  }
 }

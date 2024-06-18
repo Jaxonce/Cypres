@@ -15,12 +15,16 @@ class ConversationServiceAPI implements ConversationService {
   MessageDTO _parseMessage(String responseBody) =>
       MessageDTO.fromJson(jsonDecode(responseBody));
 
+  List<MessageDTO> _parseMessages(String responseBody) {
+    final json = jsonDecode(responseBody);
+    return (json as List).map((data) => MessageDTO.fromJson(data)).toList();
+  }
+
   @override
   Future<ConversationDTO> getConversation(String contactId) async {
-    final response = await http
-        .get(Uri.parse('${dotenv.env['HOST']}/Message/conversation/$contactId'), headers: {
-            'Authorization': 'Bearer ${getSavedToken()}'
-    });
+    final response = await http.get(
+        Uri.parse('${dotenv.env['HOST']}/Message/conversation/$contactId'),
+        headers: {'Authorization': 'Bearer ${await getSavedToken()}'});
 
     if (response.statusCode == 200) {
       return _parseConversation(response.body);
@@ -30,16 +34,42 @@ class ConversationServiceAPI implements ConversationService {
   }
 
   @override
+  Future<List<MessageDTO>> getConversationMessages(String convId) async {
+    final response = await http.get(
+        Uri.parse('${dotenv.env['HOST']}/Message/conversation/$convId'),
+        headers: {'Authorization': 'Bearer ${await getSavedToken()}'});
+
+    if (response.statusCode == 200) {
+      return _parseMessages(response.body);
+    } else {
+      throw Exception('Failed to load messages');
+    }
+  }
+
+  @override
   Future<MessageDTO> getLastMessage(String contactId) async {
-    final response = await http.get(Uri.parse(
-        '${dotenv.env['HOST']}/messages/conversation/$contactId/last'), headers: {
-      'Authorization': 'Bearer ${getSavedToken()}'
-    });
+    final response = await http.get(
+        Uri.parse('${dotenv.env['HOST']}/Message/conversation/$contactId/last'),
+        headers: {'Authorization': 'Bearer ${await getSavedToken()}'});
 
     if (response.statusCode == 200) {
       return _parseMessage(response.body);
     } else {
       throw Exception('Failed to recover message');
+    }
+  }
+
+  @override
+  Future<String> getConversationId(String contactId, String userId) async {
+    final response = await http.get(
+        Uri.parse(
+            '${dotenv.env['HOST']}/Conversation/id?user1=$contactId&user2=$userId'),
+        headers: {'Authorization': 'Bearer ${await getSavedToken()}'});
+
+    if (response.statusCode == 200) {
+      return response.body.replaceAll('"', '').replaceAll('\\', '');
+    } else {
+      throw Exception('Failed to recover conversation id');
     }
   }
 }

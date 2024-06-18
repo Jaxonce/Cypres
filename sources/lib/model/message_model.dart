@@ -4,10 +4,9 @@ class MessageModel {
   String content;
   DateTime date;
   String senderId;
-  String receiverId;
 
-  MessageModel(this.content, this.date, this.senderId, this.receiverId);
+  MessageModel(this.content, this.date, this.senderId);
 
   factory MessageModel.DTOToPOCO(MessageDTO DTO) =>
-      MessageModel(DTO.content, DTO.date, DTO.senderId, DTO.receiverId);
+      MessageModel(DTO.content, DTO.date, DTO.senderId);
 }

@@ -1,11 +1,8 @@
 import 'package:cypres/model/message_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../controllers/contact-list-page-controller.dart';
 import '../../model/contact_model.dart';
-
-final GetIt _getIt = GetIt.instance;
 
 class ContactItem extends StatefulWidget {
   final ContactModel contact;
@@ -22,14 +19,13 @@ class _ContactItemState extends State<ContactItem> {
   MessageModel? lastMessage;
 
   Future<void> _loadLastMessage() async {
-    MessageModel tmp =
+    MessageModel? tmp =
         await widget.controller.getLastMessage(widget.contact.id);
-    if (tmp.content.isEmpty) {
-      tmp.content = "Image";
+    if (tmp != null) {
+      setState(() {
+        lastMessage = tmp;
+      });
     }
-    setState(() {
-      lastMessage = tmp;
-    });
   }
 
   @override
