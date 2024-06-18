@@ -12,15 +12,15 @@ class MessageServiceStub extends BaseStub implements MessageService {
   }
 
   @override
-  List<MessageDTO> getMessages(ConversationDTO c) => stub()
+  Future<List<MessageDTO>> getMessages(String convId) async => await stub()
       .messages
-      .where((m) => m.senderId == c.contactId || m.receiverId == c.contactId)
+      .where((m) => m.senderId == convId)
       .toList();
 
   @override
   MessageDTO getLastMessage(ContactDTO c) => stub()
       .messages
-      .where((m) => m.senderId == c.id || m.receiverId == c.id)
+      .where((m) => m.senderId == c.id)
       .reduce((a, b) => a.date.difference(DateTime.now()).abs() <
               b.date.difference(DateTime.now()).abs()
           ? a

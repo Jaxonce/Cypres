@@ -6,7 +6,7 @@ import '../../data/DTOs/message_dto.dart';
 abstract class MessageService {
   void sendMessage(MessageDTO m);
 
-  List<MessageDTO> getMessages(ConversationDTO c);
+  Future<List<MessageDTO>> getMessages(String convId);
 
   MessageDTO getLastMessage(ContactDTO c);
 }

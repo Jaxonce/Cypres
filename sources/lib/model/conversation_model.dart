@@ -14,16 +14,22 @@ class ConversationModel {
 
   ConversationModel(this.contact, this.messages);
 
+  Future<void> getMessages(String convId) async{
+    MessageService messageService = _getIt.get<MessageService>();
+    List<MessageDTO> dtos = [];
+    dtos = await messageService.getMessages(convId);
+    for (var element in dtos) {
+      messages.add(MessageModel.DTOToPOCO(element));
+    }
+  }
+
   factory ConversationModel.DTOToPOCO(
       ConversationDTO DTO, ContactModel contact) {
     MessageService messageService = _getIt.get<MessageService>();
     List<MessageModel> pocos = [];
-    List<MessageDTO> dtos = messageService.getMessages(DTO);
-
-    for (var element in dtos) {
-      pocos.add(MessageModel.DTOToPOCO(element));
-    }
 
     return ConversationModel(contact, pocos);
   }
+
+
 }

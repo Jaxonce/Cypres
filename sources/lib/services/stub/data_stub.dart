@@ -7,18 +7,18 @@ import '../../data/DTOs/event_dto.dart';
 
 class DataStub {
   List<ConversationDTO> conversations = [
-    ConversationDTO('1001'),
-    ConversationDTO('1002'),
-    ConversationDTO('1003'),
-    ConversationDTO('1004'),
-    ConversationDTO('1005'),
-    ConversationDTO('1006'),
-    ConversationDTO('1007'),
-    ConversationDTO('1008'),
-    ConversationDTO('1009'),
-    ConversationDTO('1010'),
-    ConversationDTO('1011'),
-    ConversationDTO('1012')
+    ConversationDTO('2001','1001'),
+    ConversationDTO('2002','1002'),
+    ConversationDTO('2003','1003'),
+    ConversationDTO('2004','1004'),
+    ConversationDTO('2005','1005'),
+    ConversationDTO('2006','1006'),
+    ConversationDTO('2007','1007'),
+    ConversationDTO('2008','1008'),
+    ConversationDTO('2009','1009'),
+    ConversationDTO('2010','1010'),
+    ConversationDTO('2011','1011'),
+    ConversationDTO('2012','1012'),
   ];
 
   UserDTO user = UserDTO(
@@ -57,116 +57,116 @@ class DataStub {
 
   List<MessageDTO> messages = [
     //user 1
-    MessageDTO('Hello world', DateTime.now(), '1002', '1001'),
-    MessageDTO('Hello world', DateTime.now(), '1002', '1001'),
-    MessageDTO('Hello world', DateTime.now(), '1002', '1011'),
+    MessageDTO('Hello world', DateTime.now(), '1002'),
+    MessageDTO('Hello world', DateTime.now(), '1002'),
+    MessageDTO('Hello world', DateTime.now(), '1002'),
 
-    MessageDTO('Bienvenue', DateTime.now(), '1001', '1000'),
-    MessageDTO('Hola', DateTime.now(), '1008', '1001'),
+    MessageDTO('Bienvenue', DateTime.now(), '1001'),
+    MessageDTO('Hola', DateTime.now(), '1008'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1000',
-        '1001'),
+        ),
     //user 2
 
-    MessageDTO('Bienvenue', DateTime.now(), '1001', '1002'),
-    MessageDTO('Hola', DateTime.now(), '1000', '1002'),
+    MessageDTO('Bienvenue', DateTime.now(), '1001'),
+    MessageDTO('Hola', DateTime.now(), '1000'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1002',
-        '1001'),
+        ),
     //user 3
-    MessageDTO('Hello world', DateTime.now(), '1003', '1001'),
-    MessageDTO('Bienvenue', DateTime.now(), '1001', '1003'),
-    MessageDTO('Hola', DateTime.now(), '1004', '1003'),
+    MessageDTO('Hello world', DateTime.now(), '1003'),
+    MessageDTO('Bienvenue', DateTime.now(), '1001'),
+    MessageDTO('Hola', DateTime.now(), '1004'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1003',
-        '1001'),
+       ),
     //user 4
-    MessageDTO('Hello world', DateTime.now(), '1005', '1001'),
-    MessageDTO('Bienvenue', DateTime.now(), '1001', '1005'),
-    MessageDTO('Hola', DateTime.now(), '1004', '1005'),
+    MessageDTO('Hello world', DateTime.now(), '1005'),
+    MessageDTO('Bienvenue', DateTime.now(), '1001'),
+    MessageDTO('Hola', DateTime.now(), '1004'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1004',
-        '1005'),
+       ),
     //user 5
-    MessageDTO('Hello world', DateTime.now(), '1006', '1001'),
-    MessageDTO('Bienvenue', DateTime.now(), '1001', '1006'),
-    MessageDTO('Hola', DateTime.now(), '1006', '1001'),
+    MessageDTO('Hello world', DateTime.now(), '1006'),
+    MessageDTO('Bienvenue', DateTime.now(), '1001'),
+    MessageDTO('Hola', DateTime.now(), '1006'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1006',
-        '1001'),
+       ),
     //user 6
-    MessageDTO('Hello world', DateTime.now(), '1007', '1001'),
-    MessageDTO('Bienvenue', DateTime.now(), '1007', '1003'),
-    MessageDTO('Hola', DateTime.now(), '1007', '1002'),
+    MessageDTO('Hello world', DateTime.now(), '1007'),
+    MessageDTO('Bienvenue', DateTime.now(), '1007'),
+    MessageDTO('Hola', DateTime.now(), '1007'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1007',
-        '1001'),
+       ),
     //user 7
-    MessageDTO('Hello world', DateTime.now(), '1008', '1001'),
-    MessageDTO('Bienvenue', DateTime.now(), '1001', '1008'),
-    MessageDTO('Hola', DateTime.now(), '1004', '1008'),
+    MessageDTO('Hello world', DateTime.now(), '1008', ),
+    MessageDTO('Bienvenue', DateTime.now(), '1001'),
+    MessageDTO('Hola', DateTime.now(), '1004'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1008',
-        '1001'),
+       ),
     //user 8
-    MessageDTO('Hello world', DateTime.now(), '1009', '1001'),
-    MessageDTO('Bienvenue', DateTime.now(), '1009', '1004'),
-    MessageDTO('Hola', DateTime.now(), '1004', '1009'),
+    MessageDTO('Hello world', DateTime.now(), '1009'),
+    MessageDTO('Bienvenue', DateTime.now(), '1009'),
+    MessageDTO('Hola', DateTime.now(), '1004'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1009',
-        '1001'),
+        ),
     //user 9
-    MessageDTO('Hello world', DateTime.now(), '1010', '1001'),
-    MessageDTO('Bienvenue', DateTime.now(), '1001', '1010'),
-    MessageDTO('Hola', DateTime.now(), '1010', '1001'),
+    MessageDTO('Hello world', DateTime.now(), '1010'),
+    MessageDTO('Bienvenue', DateTime.now(), '1001'),
+    MessageDTO('Hola', DateTime.now(), '1010'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1010',
-        '1001'),
+       ),
     //user 10
 
-    MessageDTO('Bienvenue', DateTime.now(), '1011', '1002'),
-    MessageDTO('Hola', DateTime.now(), '1011', '1002'),
+    MessageDTO('Bienvenue', DateTime.now(), '1011'),
+    MessageDTO('Hola', DateTime.now(), '1011'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1002',
-        '1011'),
+        ),
     //user 11
-    MessageDTO('Hello world', DateTime.now(), '1003', '1012'),
-    MessageDTO('Bienvenue', DateTime.now(), '1012', '1003'),
-    MessageDTO('Hola', DateTime.now(), '1004', '1012'),
+    MessageDTO('Hello world', DateTime.now(), '1003'),
+    MessageDTO('Bienvenue', DateTime.now(), '1012'),
+    MessageDTO('Hola', DateTime.now(), '1004'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1003',
-        '1012'),
+        ),
     //user 12
-    MessageDTO('Hello world', DateTime.now(), '1004', '1001'),
-    MessageDTO('Bienvenue', DateTime.now(), '1001', '1004'),
-    MessageDTO('Hola', DateTime.now(), '1004', '1002'),
+    MessageDTO('Hello world', DateTime.now(), '1004'),
+    MessageDTO('Bienvenue', DateTime.now(), '1001'),
+    MessageDTO('Hola', DateTime.now(), '1004'),
     MessageDTO(
         'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal',
         DateTime.now(),
         '1004',
-        '1001')
+        )
   ];
 
   List<EventDTO> events = [

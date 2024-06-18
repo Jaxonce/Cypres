@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cypres/utils/hash_password_utils.dart';
 import 'package:cypres/utils/local_storage_service.dart';
 import 'package:cypres/widget/connection/custom-textfield.dart';
 import 'package:email_validator/email_validator.dart';
@@ -13,7 +14,7 @@ import 'big-button.dart';
 
 final GetIt _getIt = GetIt.instance;
 
-enum Field { lastname, firstname, mail, password }
+enum Field {lastname, firstname, mail, password}
 
 class ConnectionChainCustom extends StatefulWidget {
   final String title;
@@ -25,16 +26,16 @@ class ConnectionChainCustom extends StatefulWidget {
   final TextInputType type;
   final Field field;
 
-  const ConnectionChainCustom(
-      {super.key,
-      required this.title,
-      required this.hintText,
-      required this.nextRoute,
-      this.buttonText = "Continuer",
-      this.isPassword = false,
-      this.type = TextInputType.text,
-      this.isConnection = false,
-      required this.field});
+  const ConnectionChainCustom({super.key,
+    required this.title,
+    required this.hintText,
+    required this.nextRoute,
+    this.buttonText = "Continuer",
+    this.isPassword = false,
+    this.type = TextInputType.text,
+    this.isConnection = false,
+    required this.field
+  });
 
   @override
   State<ConnectionChainCustom> createState() => _ConnectionChainCustomState();
@@ -152,16 +153,16 @@ class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
       user = UserModel("", "", "", "", null, "");
     }
     switch (widget.field) {
-      case Field.lastname:
+      case Field.lastname :
         user.lastname = textController.text;
-      case Field.firstname:
+      case Field.firstname :
         user.firstname = textController.text;
-      case Field.mail:
+      case Field.mail :
         user.mailAddress = textController.text;
-      case Field.password:
+      case Field.password :
         user.password = textController.text;
     }
-    if (await validateField(user)) {
+    if(await validateField(user)) {
       if (widget.field == Field.password) {
         if (widget.isConnection) {
           await getAndSaveToken(user.mailAddress, user.password);
@@ -194,13 +195,11 @@ class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
     if (widget.field == Field.password && !isValidPassword(user.password)) {
       setState(() {
         showError = true;
-        errorMessage =
-            "Le mot de passe doit contenir au moins 8 caractères, un chiffre et un caractère spécial";
+        errorMessage = "Le mot de passe doit contenir au moins 8 caractères, un chiffre et un caractère spécial";
       });
       return false;
     }
-    if (widget.field == Field.mail &&
-        EmailValidator.validate(user.mailAddress)) {
+    if (widget.field == Field.mail && EmailValidator.validate(user.mailAddress)) {
       await isUserExist(user.mailAddress);
       return true;
     } else if (widget.field == Field.mail) {
@@ -218,7 +217,11 @@ class _ConnectionChainCustomState extends State<ConnectionChainCustom> {
     String token = await controller.login(email, password);
     saveToken(token);
     UserDTO userConnected = await controller.connect(email);
-    UserModel.getInstance() != null ? UserModel.DTOToPOCO(userConnected) : null;
+    UserModel.getInstance()!.id = userConnected.id;
+    UserModel.getInstance()!.firstname = userConnected.firstname;
+    UserModel.getInstance()!.lastname = userConnected.lastname;
+    UserModel.getInstance()!.mailAddress = userConnected.mailAddress;
+    UserModel.getInstance()!.password = userConnected.password;
     //UserModel.getInstance()?.profilePictureBytes = userConnected.profilePictureBase64;
   }
 

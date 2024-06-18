@@ -22,14 +22,13 @@ class _ContactItemState extends State<ContactItem> {
   MessageModel? lastMessage;
 
   Future<void> _loadLastMessage() async {
-    MessageModel tmp =
+    MessageModel? tmp =
         await widget.controller.getLastMessage(widget.contact.id);
-    if (tmp.content.isEmpty) {
-      tmp.content = "Image";
+    if (tmp != null) {
+      setState(() {
+        lastMessage = tmp;
+      });
     }
-    setState(() {
-      lastMessage = tmp;
-    });
   }
 
   @override

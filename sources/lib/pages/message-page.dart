@@ -168,7 +168,7 @@ class _MessagePageState extends State<MessagePage> {
       padding: const EdgeInsets.only(top: 20, bottom: 80),
       children: List.generate(messagesList.length, (index) {
         return CustomChatBubble(
-            isMe: messagesList[index].receiverId ==
+            isMe: messagesList[index].senderId !=
                 currentConversation?.contact.id,
             message: messagesList[index].content,
             time: messagesList[index].date.hour.toString(),

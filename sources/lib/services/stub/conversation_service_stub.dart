@@ -15,4 +15,10 @@ class ConversationServiceStub extends BaseStub implements ConversationService {
     // TODO: implement getLastMessage
     throw UnimplementedError();
   }
+
+  @override
+  Future<String> getConversationId(String contactId, String userId) {
+    // TODO: implement getConversationId
+    throw UnimplementedError();
+  }
 }

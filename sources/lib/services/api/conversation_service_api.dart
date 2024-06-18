@@ -19,7 +19,7 @@ class ConversationServiceAPI implements ConversationService {
   Future<ConversationDTO> getConversation(String contactId) async {
     final response = await http
         .get(Uri.parse('${dotenv.env['HOST']}/Message/conversation/$contactId'), headers: {
-            'Authorization': 'Bearer ${getSavedToken()}'
+            'Authorization': 'Bearer ${await getSavedToken()}'
     });
 
     if (response.statusCode == 200) {
@@ -32,14 +32,27 @@ class ConversationServiceAPI implements ConversationService {
   @override
   Future<MessageDTO> getLastMessage(String contactId) async {
     final response = await http.get(Uri.parse(
-        '${dotenv.env['HOST']}/messages/conversation/$contactId/last'), headers: {
-      'Authorization': 'Bearer ${getSavedToken()}'
+        '${dotenv.env['HOST']}/Message/conversation/$contactId/last'), headers: {
+      'Authorization': 'Bearer ${await getSavedToken()}'
     });
 
     if (response.statusCode == 200) {
       return _parseMessage(response.body);
     } else {
       throw Exception('Failed to recover message');
+    }
+  }
+
+  @override
+  Future<String> getConversationId(String contactId, String userId) async{
+    final response = await http.get(Uri.parse(
+        '${dotenv.env['HOST']}/Conversation/id?user1=$contactId&user2=$userId'), headers: {
+      'Authorization': 'Bearer ${await getSavedToken()}'});
+
+    if (response.statusCode == 200) {
+      return response.body.replaceAll('"', '').replaceAll('\\', '');
+    } else {
+      throw Exception('Failed to recover conversation id');
     }
   }
 }
