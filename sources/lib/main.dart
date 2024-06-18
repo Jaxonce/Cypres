@@ -4,6 +4,7 @@ import 'package:cypres/pages/contact-list-page.dart';
 import 'package:cypres/pages/edit-event-page.dart';
 import 'package:cypres/pages/event-list-page.dart';
 import 'package:cypres/pages/home-page.dart';
+import 'package:cypres/pages/image-gallery-page.dart';
 import 'package:cypres/pages/message-page.dart';
 import 'package:cypres/utils/local_storage_service.dart';
 import 'package:cypres/widget/connection/connection-chain-custom.dart';
@@ -32,7 +33,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var token = getSavedToken();
-  var initialRoute = '/';
+  var initialRoute = '/gallery';
 
   void checkToken() async {
     //TODO verif userConnected value
@@ -109,7 +110,8 @@ class _MyAppState extends State<MyApp> {
         '/contact/add': (context) => AddConversationPage(),
         '/event': (context) => EventPage(),
         '/event-add': (context) => EditEventPage(),
-        '/event/edit': (context) => EditEventPage()
+        '/event/edit': (context) => EditEventPage(),
+        '/gallery': (context) => const ImageGallery(),
         //'/test':(context) => ChatScreen(username: "Maxence")
       },
     );
