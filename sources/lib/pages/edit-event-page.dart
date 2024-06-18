@@ -2,8 +2,6 @@ import 'package:cypres/controllers/event-add-controller.dart';
 import 'package:cypres/model/event_model.dart';
 import 'package:cypres/widget/event/date-picker-field.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:super_cupertino_navigation_bar/super_cupertino_navigation_bar.dart';
@@ -11,7 +9,7 @@ import 'package:super_cupertino_navigation_bar/super_cupertino_navigation_bar.da
 final GetIt _getIt = GetIt.instance;
 
 class EditEventPage extends StatefulWidget {
-  final EventAddController controller = _getIt.get<EventAddController>();
+  final EventAddController controller = EventAddController();
 
   EditEventPage({super.key});
 

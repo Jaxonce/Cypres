@@ -13,17 +13,17 @@ import 'package:get_it/get_it.dart';
 
 import 'dependency_injection.dart' as di;
 
-void main() async {
+final GetIt _getIt = GetIt.instance;
+
+Future<void> main() async {
   di.init();
   await dotenv.load(fileName: "assets/.env");
   runApp(MyApp());
 }
 
-final GetIt _getIt = GetIt.instance;
-
 class MyApp extends StatefulWidget {
-  final AuthenticationController controller =
-  _getIt.get<AuthenticationController>();
+  final AuthenticationController controller = AuthenticationController();
+
   MyApp({super.key});
 
   @override
@@ -31,7 +31,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   var token = getSavedToken();
   var initialRoute = '/';
 
@@ -62,37 +61,49 @@ class _MyAppState extends State<MyApp> {
       routes: {
         '/': (context) => const HomePage(),
         '/connection': (context) => const ConnectionChainCustom(
-            title: "Adresse mail",
-            hintText: "louis.dupont@gmail.com",
-            nextRoute: "/connection/password",
-            type: TextInputType.emailAddress,
-            isConnection: true,
-        field: Field.mail,),
+              title: "Adresse mail",
+              hintText: "louis.dupont@gmail.com",
+              nextRoute: "/connection/password",
+              type: TextInputType.emailAddress,
+              isConnection: true,
+              field: Field.mail,
+            ),
         '/connection/password': (context) => const ConnectionChainCustom(
-            title: "Mot de passe",
-            hintText: "••••••••",
-            nextRoute: "/contact",
-            buttonText: "Se Connecter",
-            isPassword: true,
-            isConnection: true,
-        field: Field.password,),
+              title: "Mot de passe",
+              hintText: "••••••••",
+              nextRoute: "/contact",
+              buttonText: "Se Connecter",
+              isPassword: true,
+              isConnection: true,
+              field: Field.password,
+            ),
         '/signup/lastname': (context) => const ConnectionChainCustom(
-            title: "Nom", hintText: "Dupont", nextRoute: "/signup/firstname", field: Field.lastname,),
+              title: "Nom",
+              hintText: "Dupont",
+              nextRoute: "/signup/firstname",
+              field: Field.lastname,
+            ),
         '/signup/firstname': (context) => const ConnectionChainCustom(
-            title: "Prénom", hintText: "Louis", nextRoute: "/signup/password", field: Field.firstname,),
+              title: "Prénom",
+              hintText: "Louis",
+              nextRoute: "/signup/password",
+              field: Field.firstname,
+            ),
         '/signup/mail': (context) => const ConnectionChainCustom(
-            title: "Adresse mail",
-            hintText: "louis.dupont@gmail.com",
-            nextRoute: "/signup/lastname",
-            type: TextInputType.emailAddress,
-        field: Field.mail,),
+              title: "Adresse mail",
+              hintText: "louis.dupont@gmail.com",
+              nextRoute: "/signup/lastname",
+              type: TextInputType.emailAddress,
+              field: Field.mail,
+            ),
         '/signup/password': (context) => const ConnectionChainCustom(
-            title: "Mot de passe",
-            hintText: "••••••••",
-            nextRoute: "/contact",
-            buttonText: "Terminer",
-            isPassword: true,
-        field: Field.password,),
+              title: "Mot de passe",
+              hintText: "••••••••",
+              nextRoute: "/contact",
+              buttonText: "Terminer",
+              isPassword: true,
+              field: Field.password,
+            ),
         '/message': (context) => MessagePage(),
         '/contact': (context) => ContactPage(),
         '/contact/add': (context) => AddConversationPage(),

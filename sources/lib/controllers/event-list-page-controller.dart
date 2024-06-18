@@ -9,8 +9,24 @@ import '../services/interfaces/event_service.dart';
 final GetIt _getIt = GetIt.instance;
 
 class EventListPageController {
+  static EventListPageController? _instance;
+
   final UserService _userService = _getIt.get<UserService>();
   final EventService _eventService = _getIt.get<EventService>();
+
+  EventListPageController._internal();
+
+  factory EventListPageController() {
+    _instance ??= EventListPageController._internal();
+    return _instance!;
+  }
+
+  static EventListPageController? getInstance() => _instance;
+
+  static void resetInstance() {
+    _instance = null;
+  }
+
 
   Future<UserModel> connectUser() async =>
       UserModel.DTOToPOCO(await _userService.connect("km1@gmail.com"));

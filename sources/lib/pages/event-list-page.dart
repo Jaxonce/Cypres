@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:cypres/controllers/event-list-page-controller.dart';
 import 'package:cypres/model/event_model.dart';
@@ -16,8 +15,7 @@ import '../model/user_model.dart';
 final GetIt _getIt = GetIt.instance;
 
 class EventPage extends StatefulWidget {
-  final EventListPageController controller =
-      _getIt.get<EventListPageController>();
+  final EventListPageController controller = EventListPageController();
 
   EventPage({super.key});
 

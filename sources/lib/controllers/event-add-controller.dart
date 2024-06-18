@@ -9,8 +9,23 @@ import '../model/user_model.dart';
 final GetIt _getIt = GetIt.instance;
 
 class EventAddController {
+  static EventAddController? _instance;
+
   final UserService _userService = _getIt.get<UserService>();
   final EventService _eventService = _getIt.get<EventService>();
+
+  EventAddController._internal();
+
+  factory EventAddController() {
+    _instance ??= EventAddController._internal();
+    return _instance!;
+  }
+
+  static EventAddController? getInstance() => _instance;
+
+  static void resetInstance() {
+    _instance = null;
+  }
 
   Future<UserModel> connectUser() async =>
       UserModel.DTOToPOCO(await _userService.connect("km1@gmail.com"));

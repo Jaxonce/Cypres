@@ -10,12 +10,9 @@ import '../model/contact_model.dart';
 final GetIt _getIt = GetIt.instance;
 
 class ContactPage extends StatefulWidget {
-  final ContactListPageController controller =
-      _getIt.get<ContactListPageController>();
+  final ContactListPageController controller = ContactListPageController();
 
-  ContactPage({
-    super.key,
-  });
+  ContactPage({super.key});
 
   @override
   State<ContactPage> createState() => _ContactPageState();
@@ -47,7 +44,8 @@ class _ContactPageState extends State<ContactPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CupertinoButton(
-                    onPressed: () => Navigator.pushNamed(context, "/contact/add"),
+                    onPressed: () =>
+                        Navigator.pushNamed(context, "/contact/add"),
                     child: const Icon(
                       CupertinoIcons.add,
                       color: CupertinoColors.activeBlue,

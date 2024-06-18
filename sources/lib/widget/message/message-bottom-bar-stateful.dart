@@ -1,13 +1,10 @@
 import 'dart:io';
 
-import 'package:cypres/model/conversation_model.dart';
 import 'package:cypres/model/member_model.dart';
 import 'package:cypres/widget/message/popup-surface.dart';
 import 'package:cypres/widget/message/text-field-message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../model/contact_model.dart';
 
 class MessageBottomBar extends StatefulWidget {
   final List<MemberModel> conversationMembers;

@@ -8,8 +8,7 @@ final GetIt _getIt = GetIt.instance;
 
 class EventItem extends StatefulWidget {
   final EventModel event;
-  final EventListPageController controller =
-      _getIt.get<EventListPageController>();
+  final EventListPageController controller = EventListPageController();
   final Function? onUpdated;
 
   EventItem({super.key, required this.event, this.onUpdated});
