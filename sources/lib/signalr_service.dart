@@ -12,7 +12,12 @@ class SignalRService {
     print(serverUrl);
     if (serverUrl != null) {
       hubConnection = HubConnectionBuilder().withUrl(serverUrl!).build();
+      hubConnection?.on("ReceiveMessage", _handleReceiveMessage);
     }
+  }
+
+  void _handleReceiveMessage(List<dynamic>? parameters) {
+    print("Message received from ${parameters?[0] as String}");
   }
 
   factory SignalRService(String userId) {
