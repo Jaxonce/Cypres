@@ -33,7 +33,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var token = getSavedToken();
-  var initialRoute = '/gallery';
+  var initialRoute = '/';
 
   void checkToken() async {
     //TODO verif userConnected value

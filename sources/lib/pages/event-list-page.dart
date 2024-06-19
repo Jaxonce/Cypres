@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cypres/controllers/event-list-page-controller.dart';
 import 'package:cypres/model/event_model.dart';
+import 'package:cypres/pages/edit-event-page.dart';
 import 'package:cypres/widget/event/event-item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,13 @@ class _EventPageState extends State<EventPage> {
         ModalRoute.of(context)!.settings.arguments as ContactModel;
     events = widget.controller.getEvents(userModel.id, contact.id);
 
+    if (contact.profilePictureBytes != null) {
+      profileImage = Image.memory(contact.profilePictureBytes!);
+    } else {
+      profileImage = Image.asset("assets/avatar.png");
+    }
+
+
     // Calculer le pourcentage pour le padding
     const double paddingPercentage = 0.12; // 10% de la taille de l'écran
     final double paddingValue = screenHeight * paddingPercentage;
@@ -74,7 +82,7 @@ class _EventPageState extends State<EventPage> {
                 CupertinoButton(
                     onPressed: () async {
                       final newEvent =
-                          await Navigator.pushNamed(context, "/event-add");
+                          await Navigator.pushNamed(context, "/event-add", arguments: EventNavigationArgs(null, contact));
                       if (newEvent != null) {
                         setState(() {
                           widget.controller.addEvent(newEvent as EventModel);
@@ -142,18 +150,17 @@ class _EventPageState extends State<EventPage> {
                       events[index].location,
                       events[index].beginDate,
                       events[index].endDate,
-                      events[index].creator),
+                      events[index].creator,
+                      events[index].conversationId,
+                      events[index].sync),
                   onUpdated: () {
                     setState(() {});
-                  }));
+                  },
+              conversationContact: contact,));
         });
   }
 
   void _loadUser() async {
-    userModel = await widget.controller.connectUser();
-    base64Image = userModel.profilePictureBytes.toString();
-    if (base64Image != null) {
-      profileImage = imageFromBase64String(base64Image!);
-    }
+    userModel = UserModel.getInstance()!;
   }
 }

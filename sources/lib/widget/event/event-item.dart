@@ -1,8 +1,11 @@
 import 'package:cypres/controllers/event-list-page-controller.dart';
 import 'package:cypres/model/event_model.dart';
+import 'package:cypres/pages/edit-event-page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
+
+import '../../model/contact_model.dart';
 
 final GetIt _getIt = GetIt.instance;
 
@@ -10,8 +13,9 @@ class EventItem extends StatefulWidget {
   final EventModel event;
   final EventListPageController controller = EventListPageController();
   final Function? onUpdated;
+  final ContactModel? conversationContact;
 
-  EventItem({super.key, required this.event, this.onUpdated});
+  EventItem({super.key, required this.event, this.onUpdated, this.conversationContact});
 
   @override
   State<EventItem> createState() => _EventItemState();
@@ -36,7 +40,7 @@ class _EventItemState extends State<EventItem> {
           CupertinoContextMenuAction(
               onPressed: () async {
                 await Navigator.pushNamed(context, "/event/edit",
-                    arguments: widget.event);
+                    arguments: EventNavigationArgs(widget.event, widget.conversationContact));
                 widget.onUpdated!();
                 Navigator.pop(context);
               },

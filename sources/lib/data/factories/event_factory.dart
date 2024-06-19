@@ -14,6 +14,7 @@ class EventFactory {
       DTO.beginDate,
       DTO.endDate,
       UserModel.DTOToPOCO(DTO.creator),
+      DTO.conversationId,
       DTO.sync,
     );
   }
@@ -28,6 +29,6 @@ class EventFactory {
 
   static EventDTO POCOToDTO(EventModel POCO) {
     return EventDTO(POCO.id, POCO.name, POCO.description, POCO.location,
-        POCO.beginDate, POCO.endDate, UserDTO.POCOToDTO(POCO.creator));
+        POCO.beginDate, POCO.endDate, UserDTO.POCOToDTO(POCO.creator), POCO.conversationId, POCO.sync);
   }
 }
