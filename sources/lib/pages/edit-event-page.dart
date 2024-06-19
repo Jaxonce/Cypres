@@ -1,12 +1,22 @@
 import 'package:cypres/controllers/event-add-controller.dart';
 import 'package:cypres/model/event_model.dart';
+import 'package:cypres/model/user_model.dart';
 import 'package:cypres/widget/event/date-picker-field.dart';
 import 'package:flutter/cupertino.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
 import 'package:super_cupertino_navigation_bar/super_cupertino_navigation_bar.dart';
 
+import '../model/contact_model.dart';
+
 final GetIt _getIt = GetIt.instance;
+
+class EventNavigationArgs {
+  final EventModel? event;
+  final ContactModel? contact;
+
+  EventNavigationArgs(this.event, this.contact);
+}
 
 class EditEventPage extends StatefulWidget {
   final EventAddController controller = EventAddController();
@@ -39,9 +49,19 @@ class _EditEventPageState extends State<EditEventPage> {
 
   @override
   Widget build(BuildContext context) {
-    var oldEvent = ModalRoute.of(context)!.settings.arguments;
+    var eventArgs = ModalRoute.of(context)!.settings.arguments;
+    EventModel? oldEvent;
+    late ContactModel? contact;
+    if (eventArgs != null) {
+      eventArgs as EventNavigationArgs;
+      if(eventArgs.event != null){
+        oldEvent = eventArgs.event as EventModel;
+      }
+      if(eventArgs.contact != null){
+        contact = eventArgs.contact as ContactModel;
+      }
+    }
     if (oldEvent != null) {
-      oldEvent as EventModel;
       titleController.text = oldEvent.name;
       descriptionController.text = oldEvent.description;
       locationController.text = oldEvent.location;
@@ -50,6 +70,7 @@ class _EditEventPageState extends State<EditEventPage> {
       switchValue = oldEvent.sync;
       titlePage = "Edit";
     }
+
     return SuperScaffold(
         appBar: SuperAppBar(
             title: Text("${titlePage} Event"),
@@ -84,7 +105,8 @@ class _EditEventPageState extends State<EditEventPage> {
                       locationController.text,
                       beginDate,
                       endDate,
-                      await widget.controller.connectUser(),
+                      await UserModel.getInstance()!,
+                      await widget.controller.getConversationId(await UserModel.getInstance()!.id,contact!.id),
                       switchValue);
                   // ScaffoldMessenger.of(context).showSnackBar(
                   //     const SnackBar(content: Text("Ajout en cours...")));

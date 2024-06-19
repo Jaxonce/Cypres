@@ -10,9 +10,10 @@ class EventModel {
   final DateTime beginDate;
   final DateTime endDate;
   final UserModel creator;
+  final String conversationId;
   final bool sync;
 
-  EventModel(this.id, this.name,this.description,this.location,this.beginDate,this.endDate, this.creator,[this.sync = false]);
+  EventModel(this.id, this.name,this.description,this.location,this.beginDate,this.endDate, this.creator,this.conversationId,[this.sync = false]);
 
   factory EventModel.DTOToPOCO(EventDTO DTO) {
     return EventModel(
@@ -23,6 +24,7 @@ class EventModel {
       DTO.beginDate,
       DTO.endDate,
       UserModel.DTOToPOCO(DTO.creator),
+      DTO.conversationId,
       DTO.sync,
     );
   }
