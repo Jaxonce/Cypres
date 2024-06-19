@@ -2,6 +2,7 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:cypres/controllers/message-page-controller.dart';
 import 'package:cypres/model/contact_model.dart';
 import 'package:cypres/model/message_model.dart';
+import 'package:cypres/signalr_service.dart';
 import 'package:cypres/widget/message/bubble-chat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -22,7 +23,8 @@ class MessagePage extends StatefulWidget {
   State<MessagePage> createState() => _MessagePageState();
 }
 
-class _MessagePageState extends State<MessagePage> {
+class _MessagePageState extends State<MessagePage> implements Observer {
+  SignalRService notif = SignalRService.getInstance()!;
   late Image profileImage;
   ConversationModel? conversation;
   final userConnected = UserModel.getInstance()!;
@@ -36,7 +38,13 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   void initState() {
+    notif.observers.add(this);
     super.initState();
+  }
+
+  @override
+  void notifyChange() {
+    _loadConversation(contact!);
   }
 
   Future<void> _loadConversation(ContactModel contact) async {
@@ -91,7 +99,8 @@ class _MessagePageState extends State<MessagePage> {
                           backgroundColor: Colors.transparent,
                           resizeToAvoidBottomInset: true,
                           child: getBody(
-                              conversation?.messages ?? [], contact!.id),
+                              conversation?.messages.reversed.toList() ?? [],
+                              contact!.id),
                         ),
                         MessageBottomBar(
                             conversationMembers: [contact!, userConnected])

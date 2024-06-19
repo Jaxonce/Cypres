@@ -71,8 +71,10 @@ class _MessageTextFieldState extends State<MessageTextField> {
         suffix: Align(
           alignment: Alignment.bottomRight,
           child: CupertinoButton(
-            onPressed: () => {
-              controller.sendMessage(_textController.text, widget.contactId)
+            onPressed: () async {
+              await controller.sendMessage(
+                  _textController.text, widget.contactId);
+              _textController.text = "";
             },
             padding: EdgeInsets.zero,
             child: Icon(

@@ -12,8 +12,11 @@ class MessageServiceApi implements MessageService {
         Uri.parse(
             '${dotenv.env['HOST']}/Message?senderId=${m.senderId}&conversationId=$convId&content=${m.content}'),
         headers: {'Authorization': 'Bearer ${await getSavedToken()}'});
-    return;
-    print(response.statusCode);
-    if (response.statusCode != 200) throw Exception('Failed to send message');
+
+    if (response.statusCode >= 400) {
+      print(response.statusCode);
+      print(response.body);
+      throw Exception('Failed to send message');
+    }
   }
 }
